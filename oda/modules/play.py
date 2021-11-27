@@ -171,7 +171,7 @@ async def hfmm(_, message):
 async def m_cb(b, cb):
     global que
     permission = "can_delete_messages"
-    m = await adminsOnly(permission, message)
+    m = await adminsOnly(permission, cb)
     if m == 1:
         return
     qeue = que.get(cb.message.chat.id)
@@ -259,6 +259,7 @@ async def play(_, message: Message):
                 if "+" in invite_link:
                     kontol = (invite_link.replace("+", "")).split("t.me/")[1]
                     link_bokep = f"https://t.me/joinchat/{kontol}"
+                await ASS_ACC.join_chat(link_bokep)
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
                 await remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
