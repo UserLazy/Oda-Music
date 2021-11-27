@@ -2,7 +2,8 @@ from functools import wraps
 
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
-from oda import app, SUDOERS
+from oda import app
+from oda.config import SUDO_USERS
 from oda.modules.admins import member_permissions
 
 
