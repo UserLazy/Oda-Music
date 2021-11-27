@@ -44,7 +44,7 @@ from oda.utils.administrator import adminsOnly
 
 
 @app.on_message(command(["pause", "op"]) & other_filters)
-@adminsOnly
+@adminsOnly("can_edit_messages")
 @sudo_users_only
 async def pause(_, message: Message):
     checking = message.from_user.mention
@@ -63,7 +63,7 @@ async def pause(_, message: Message):
 
 
 @app.on_message(command(["resume", "or"]) & other_filters)
-@adminsOnly
+@adminsOnly("can_edit_messages")
 @sudo_users_only
 async def resume(_, message: Message):
     checking = message.from_user.mention
@@ -83,7 +83,7 @@ async def resume(_, message: Message):
 
 
 @app.on_message(command(["end", "oe"]) & other_filters)
-@adminsOnly
+@adminsOnly("can_edit_messages")
 @sudo_users_only
 async def stop(_, message: Message):
     checking = message.from_user.mention
@@ -103,7 +103,7 @@ async def stop(_, message: Message):
 
 
 @app.on_message(command(["skip", "os"]) & other_filters)
-@adminsOnly
+@adminsOnly("can_edit_messages")
 @sudo_users_only
 async def skip(_, message: Message):
     checking = message.from_user.mention
@@ -131,7 +131,7 @@ async def skip(_, message: Message):
 
 
 @app.on_message(filters.command(["cleandb", "oc"]))
-@adminsOnly
+@adminsOnly("can_edit_messages")
 @sudo_users_only
 async def stop_cmd(_, message):
     chat_id = message.chat.id
