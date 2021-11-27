@@ -25,7 +25,8 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, Voice, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 
-from oda.tgcalls import calls, queues, client as ASS_ACC
+from oda.tgcalls import calls, queues
+from oda.tgcalls.calls import client as ASS_ACC
 from oda.database.queue import (
     get_active_chats,
     is_active_chat,
