@@ -1,11 +1,17 @@
 import asyncio
+import requests
 from pyrogram import Client
 from pytgcalls import idle
 from oda import app
 from oda.database.functions import clean_restart_stage
 from oda.database.queue import (get_active_chats, remove_active_chat)
 from oda.tgcalls.calls import run
-from oda.config import API_ID, API_HASH, BOT_TOKEN
+from oda.config import API_ID, API_HASH, BOT_TOKEN, BG_IMG
+
+
+response = requests.get(BG_IMG)
+with open("./etc/foreground.png", "wb") as file:
+    file.write(response.content)
 
 async def load_start():
     restart_data = await clean_restart_stage()
