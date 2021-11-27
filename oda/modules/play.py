@@ -248,7 +248,7 @@ async def play(_, message: Message):
             try: 
                 await ASS_ACC.join_chat(f"{message.chat.username}")
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
-                await remove_active_chat(chat_id)
+                await remove_active_chat(message.chat.id)
             except Exception as e:
                 await message.reply_text(f"__**Assistant Failed To Join**__\n\n**Reason**:{e}")
                 return
@@ -259,7 +259,7 @@ async def play(_, message: Message):
                 link_bokep = f"https://t.me/joinchat/{memek.split('t.me/')[1]}"
                 await ASS_ACC.join_chat(link_bokep)
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
-                await remove_active_chat(chat_id)
+                await remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
