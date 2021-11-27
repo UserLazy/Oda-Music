@@ -7,6 +7,7 @@ from pyrogram import Client, filters
 from youtube_search import YoutubeSearch
 
 from oda import app
+from oda.utils.filters import command
 from oda.config import BOT_USERNAME
 
 
