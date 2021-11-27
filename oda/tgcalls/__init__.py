@@ -6,4 +6,3 @@ from oda.tgcalls.youtube import download
 from oda.tgcalls.convert import convert
 from oda.tgcalls.calls import run
 from oda.tgcalls.calls import client
-client = 1
