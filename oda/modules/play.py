@@ -121,7 +121,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     & ~filters.bot
     & ~filters.private
 )
-@adminsOnly
+@adminsOnly("can_edit_messages")
 @sudo_users_only
 async def hfmm(_, message):
     global DISABLED_GROUPS
@@ -161,7 +161,7 @@ async def hfmm(_, message):
 
 
 @Client.on_callback_query(filters.regex(pattern=r"^(cls)$"))
-@adminsOnly
+@adminsOnly("can_edit_messages")
 @sudo_users_only
 async def m_cb(b, cb):
     global que
