@@ -40,6 +40,7 @@ from oda.tgcalls.downloaders import youtube
 from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID
 from oda.utils.filters import command
 from oda.utils.decorators import errors, sudo_users_only
+from oda.utils.administrator import adminsOnly
 from oda.utils.errors import DurationLimitError
 from oda.utils.gets import get_url, get_file_name
 
