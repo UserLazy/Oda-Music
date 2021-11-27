@@ -8,7 +8,7 @@ from pytgcalls.types.input_stream import InputStream
 
 from oda.database.queue import (is_active_chat, add_active_chat, remove_active_chat, music_on, is_music_playing, music_off)
 from oda.config import API_HASH, API_ID, SESSION_NAME
-from oda.tgcalls.queues import queues
+from oda.tgcalls import queues
 
 client = Client(SESSION_NAME, API_ID, API_HASH)
 pytgcalls = PyTgCalls(client)
