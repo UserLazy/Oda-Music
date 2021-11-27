@@ -20,11 +20,8 @@ MONGO_DB_URI = getenv("MONGO_DB_URI")
 admins = {}
 API_ID = int(getenv("API_ID"))
 API_HASH = getenv("API_HASH")
-
 OWNER_ID = int(getenv("OWNER_ID"))
-
 DURATION_LIMIT = int(getenv("DURATION_LIMIT", "10"))
-
 CMD_MUSIC = list(getenv("CMD_MUSIC", "/ !").split())
-
+BG_IMG = getenv("BG_IMG")
 SUDO_USERS = list(map(int, getenv("SUDO_USERS").split()))
