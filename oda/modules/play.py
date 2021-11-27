@@ -37,7 +37,7 @@ from oda.database.queue import (
     music_off,
 )
 from oda import app
-from oda.tgcalls import convert
+import oda.tgcalls
 from oda.tgcalls import youtube
 from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID
 from oda.utils.filters import command
@@ -247,7 +247,9 @@ async def play(_, message: Message):
     except UserNotParticipant:
         if message.chat.username:
             try: 
-                await ASS_ACC.join_chat(f"{message.chat.username}")
+                memek = await message.chat.export_invite_link()
+                link_bokep = f"https://t.me/joinchat/{memek.split('t.me/')[1]}"
+                await ASS_ACC.join_chat(link_bokep)
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
                 await remove_active_chat(message.chat.id)
             except Exception as e:
@@ -297,7 +299,7 @@ async def play(_, message: Message):
 
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
-        file_path = await convert(
+        file_path = await oda.tgcalls.convert(
             (await message.reply_to_message.download(file_name))
             if not path.isfile(path.join("downloads", file_name))
             else file_name
@@ -415,7 +417,7 @@ async def play(_, message: Message):
 
         loop = asyncio.get_event_loop()
         x = await loop.run_in_executor(None, youtube.download, url, my_hook)
-        file_path = await convert(x)
+        file_path = await oda.tgcalls.convert(x)
     else:
         if len(message.command) < 2:
             return await lel.edit(
@@ -535,7 +537,7 @@ async def play(_, message: Message):
 
         loop = asyncio.get_event_loop()
         x = await loop.run_in_executor(None, youtube.download, url, my_hook)
-        file_path = await convert(x)
+        file_path = await oda.tgcalls.convert(x)
 
     if await is_active_chat(message.chat.id):
         position = await queues.put(message.chat.id, file=file_path)
