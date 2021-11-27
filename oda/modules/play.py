@@ -256,9 +256,9 @@ async def play(_, message: Message):
         else:
             try:
                 invite_link = await message.chat.export_invite_link()
-        if "+" in invite_link:
-                kontol = (invite_link.replace("+", "")).split("t.me/")[1]
-                link_bokep = f"https://t.me/joinchat/{kontol}"
+                if "+" in invite_link:
+                    kontol = (invite_link.replace("+", "")).split("t.me/")[1]
+                    link_bokep = f"https://t.me/joinchat/{kontol}"
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
                 await remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
