@@ -44,7 +44,7 @@ from oda.utils.administrator import adminsOnly
 
 
 @app.on_message(command(["pause", "op"]) & other_filters)
-async def pause(_, message: Message
+async def pause(_, message: Message):
     if message.sender_chat:
         return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
     permission = "can_delete_messages"
