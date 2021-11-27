@@ -16,9 +16,9 @@ ASSUSERNAME = ""
 
 app = Client(
     'odamusic',
-    API_ID,
-    API_HASH,
-    bot_token=BOT_TOKEN,
+    config.API_ID,
+    config.API_HASH,
+    bot_token=config.BOT_TOKEN,
 )
 
 aiohttpsession = ClientSession()
