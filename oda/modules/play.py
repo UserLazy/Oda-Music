@@ -23,7 +23,7 @@ from youtube_search import YoutubeSearch
 
 from pyrogram import Client, filters
 from pyrogram.types import Message, Voice, InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram.errors import UserAlreadyParticipant
+from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 
 from oda.tgcalls import calls, queues, client as ASS_ACC
 from oda.database.queue import (
