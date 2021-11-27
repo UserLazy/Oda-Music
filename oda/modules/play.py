@@ -22,7 +22,7 @@ from pytgcalls.types.input_stream import InputAudioStream
 from youtube_search import YoutubeSearch
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, Voice, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import Message, Voice, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 
 from oda.tgcalls import calls, queues
@@ -167,21 +167,9 @@ async def hfmm(_, message):
 
 
 @Client.on_callback_query(filters.regex(pattern=r"^(cls)$"))
-@sudo_users_only
-async def m_cb(b, cb):
-    global que
-    permission = "can_delete_messages"
-    m = await adminsOnly(permission, cb)
-    if m == 1:
-        return
-    qeue = que.get(cb.message.chat.id)
-    type_ = cb.matches[0].group(1)
-    chat_id = cb.message.chat.id
-    m_chat = cb.message.chat
-
-    if type_ == "cls":
-        await cb.answer("Closed menu")
-        await cb.message.delete()
+async def closed(_, query: CallbackQuery):
+    await query.message.delete()
+    await query.answer()
 
 
 # play
