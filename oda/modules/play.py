@@ -256,7 +256,6 @@ async def play(_, message: Message):
         else:
             try:
                 memek = await message.chat.export_invite_link()
-                kontol = await app.revoke_chat_invite_link(message.chat.id, memek)
                 link_bokep = f"https://t.me/joinchat/{memek.split('t.me/')[1]}"
                 await ASS_ACC.join_chat(link_bokep)
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
