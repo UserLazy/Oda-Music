@@ -37,7 +37,7 @@ from oda.database.queue import (
 )
 from oda import app
 from oda.tgcalls import convert
-from oda.tgcalls.downloaders import youtube
+from oda.tgcalls.downloader import youtube
 from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID
 from oda.utils.filters import command
 from oda.utils.decorators import errors, sudo_users_only
