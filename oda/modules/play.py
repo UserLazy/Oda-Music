@@ -37,7 +37,7 @@ from oda.database.queue import (
 )
 from oda.tgcalls import converter
 from oda.tgcalls.downloaders import youtube
-from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID
+from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID
 from oda.utils.filters import command
 from oda.utils.decorators import errors, sudo_users_only
 from oda.utils.administrator import adminsOnly
@@ -197,7 +197,6 @@ async def play(_, message: Message):
         return
     lel = await message.reply("🔄 **Processing...**")
 
-    administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
     c = await app.get_chat_member(message.chat.id, BOT_ID)
