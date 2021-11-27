@@ -35,6 +35,7 @@ from oda.database.queue import (
     is_music_playing,
     music_off,
 )
+from oda import app
 from oda.tgcalls import converter
 from oda.tgcalls.downloaders import youtube
 from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID
@@ -121,10 +122,14 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     & ~filters.bot
     & ~filters.private
 )
-@adminsOnly("can_edit_messages", message)
-@sudo_users_only
 async def hfmm(_, message):
     global DISABLED_GROUPS
+    if message.sender_chat:
+        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     try:
         user_id = message.from_user.id
     except:
@@ -161,10 +166,13 @@ async def hfmm(_, message):
 
 
 @Client.on_callback_query(filters.regex(pattern=r"^(cls)$"))
-@adminsOnly("can_edit_messages", message)
 @sudo_users_only
 async def m_cb(b, cb):
     global que
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     qeue = que.get(cb.message.chat.id)
     type_ = cb.matches[0].group(1)
     chat_id = cb.message.chat.id
