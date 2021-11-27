@@ -1,7 +1,6 @@
 import asyncio
 import importlib
 from pyrogram import Client
-from aiohttp import ClientSession
 from oda import config
 
 
@@ -20,8 +19,6 @@ app = Client(
     config.API_HASH,
     bot_token=config.BOT_TOKEN,
 )
-
-aiohttpsession = ClientSession()
 
 client = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 
