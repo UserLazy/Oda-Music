@@ -44,9 +44,13 @@ from oda.utils.administrator import adminsOnly
 
 
 @app.on_message(command(["pause", "op"]) & other_filters)
-@adminsOnly("can_edit_messages", message)
-@sudo_users_only
-async def pause(_, message: Message):
+async def pause(_, message: Message
+    if message.sender_chat:
+        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
@@ -63,9 +67,13 @@ async def pause(_, message: Message):
 
 
 @app.on_message(command(["resume", "or"]) & other_filters)
-@adminsOnly("can_edit_messages", message)
-@sudo_users_only
 async def resume(_, message: Message):
+    if message.sender_chat:
+        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
@@ -83,9 +91,13 @@ async def resume(_, message: Message):
 
 
 @app.on_message(command(["end", "oe"]) & other_filters)
-@adminsOnly("can_edit_messages", message)
-@sudo_users_only
 async def stop(_, message: Message):
+    if message.sender_chat:
+        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     checking = message.from_user.mention
     chat_id = message.chat.id
     if await is_active_chat(chat_id):
@@ -103,9 +115,13 @@ async def stop(_, message: Message):
 
 
 @app.on_message(command(["skip", "os"]) & other_filters)
-@adminsOnly("can_edit_messages", message)
-@sudo_users_only
 async def skip(_, message: Message):
+    if message.sender_chat:
+        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     checking = message.from_user.mention
     chat_id = message.chat.id
     chat_title = message.chat.title
@@ -131,9 +147,13 @@ async def skip(_, message: Message):
 
 
 @app.on_message(filters.command(["cleandb", "oc"]))
-@adminsOnly("can_edit_messages", message)
-@sudo_users_only
 async def stop_cmd(_, message):
+    if message.sender_chat:
+        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     chat_id = message.chat.id
     try:
         clear(chat_id)
