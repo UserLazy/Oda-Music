@@ -247,19 +247,18 @@ async def play(_, message: Message):
     except UserNotParticipant:
         if message.chat.username:
             try: 
-                memek = await message.chat.export_invite_link()
-                link_bokep = f"https://t.me/joinchat/{memek.split('t.me/')[1]}"
-                await ASS_ACC.join_chat(link_bokep)
+                await ASS_ACC.join_chat(f"{message.chat.username}")
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
-                await remove_active_chat(message.chat.id)
+                await remove_active_chat(chat_id)
             except Exception as e:
                 await message.reply_text(f"__**Assistant Failed To Join**__\n\n**Reason**:{e}")
                 return
         else:
             try:
-                memek = await message.chat.export_invite_link()
-                link_bokep = f"https://t.me/joinchat/{memek.split('t.me/')[1]}"
-                await ASS_ACC.join_chat(link_bokep)
+                invite_link = await message.chat.export_invite_link()
+        if "+" in invite_link:
+                kontol = (invite_link.replace("+", "")).split("t.me/")[1]
+                link_bokep = f"https://t.me/joinchat/{kontol}"
                 await message.reply(f"{ASSNAME} Joined Successfully",) 
                 await remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
