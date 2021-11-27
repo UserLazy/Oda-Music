@@ -26,7 +26,7 @@ async def on_kicked(client: PyTgCalls, chat_id: int) -> None:
 @pytgcalls.on_closed_voice_chat()
 async def on_closed(client: PyTgCalls, chat_id: int) -> None:
     try:
-        queues.clear()
+        queues.clear(chat_id)
     except QueueEmpty:
         pass
     await remove_active_chat(chat_id)
