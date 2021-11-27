@@ -45,6 +45,8 @@ from oda.utils.decorators import errors, sudo_users_only
 from oda.utils.administrator import adminsOnly
 from oda.utils.errors import DurationLimitError
 from oda.utils.gets import get_url, get_file_name
+from oda.modules.admisn import member_permissions
+
 
 
 # plus
@@ -168,8 +170,16 @@ async def hfmm(_, message):
 
 @Client.on_callback_query(filters.regex(pattern=r"^(cls)$"))
 async def closed(_, query: CallbackQuery):
+    from_user = query.from_user
+    permissions = await member_permissions(query.message.chat.id, from_user.id)
+    permission = "can_restrict_members"
+    if permission not in permissions:
+        return await query.answer(
+            "You don't have enough permissions to perform this action.\n"
+            + f"Permission needed: {permission}",
+            show_alert=True,
+        )
     await query.message.delete()
-    await query.answer()
 
 
 # play
