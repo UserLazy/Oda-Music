@@ -22,5 +22,25 @@ app = Client(
 
 client = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 
+def all_info(app, client):
+    global BOT_ID, BOT_NAME, BOT_USERNAME
+    global ASSID, ASSNAME, ASSUSERNAME
+    getme = app.get_me()
+    getme1 = client.get_me()
+    BOT_ID = getme.id
+    ASSID = getme1.id
+    if getme.last_name:
+        BOT_NAME = getme.first_name + " " + getme.last_name
+    else:
+        BOT_NAME = getme.first_name
+    BOT_USERNAME = getme.username
+    ASSNAME = (
+        f"{getme1.first_name} {getme1.last_name}"
+        if getme1.last_name
+        else getme1.first_name
+    )
+    ASSUSERNAME = getme1.username
+
 app.start()
 client.start()
+all_info(app, client)
