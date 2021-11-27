@@ -45,7 +45,7 @@ from oda.utils.decorators import errors, sudo_users_only
 from oda.utils.administrator import adminsOnly
 from oda.utils.errors import DurationLimitError
 from oda.utils.gets import get_url, get_file_name
-from oda.modules.admisn import member_permissions
+from oda.modules.admins import member_permissions
 
 
 
