@@ -8,6 +8,14 @@ from pyrogram.types import Message
 
 from oda import app
 from oda.config import que
+from oda.database.queue import (
+    is_active_chat,
+    add_active_chat,
+    remove_active_chat,
+    music_on,
+    is_music_playing,
+    music_off,
+)
 from oda.tgcalls import calls
 from oda.utils.filters import command, other_filters
 from oda.utils.decorators import sudo_users_only, errors
