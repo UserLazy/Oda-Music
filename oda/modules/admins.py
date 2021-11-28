@@ -48,13 +48,16 @@ async def member_permissions(chat_id: int, user_id: int):
         perms.append("can_manage_voice_chats")
     return perms
 
+
 from oda.utils.administrator import adminsOnly
 
 
 @app.on_message(command(["pause", "op"]) & other_filters)
 async def pause(_, message: Message):
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -77,7 +80,9 @@ async def pause(_, message: Message):
 @app.on_message(command(["resume", "or"]) & other_filters)
 async def resume(_, message: Message):
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -101,7 +106,9 @@ async def resume(_, message: Message):
 @app.on_message(command(["end", "oe"]) & other_filters)
 async def stop(_, message: Message):
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -125,7 +132,9 @@ async def stop(_, message: Message):
 @app.on_message(command(["skip", "os"]) & other_filters)
 async def skip(_, message: Message):
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -157,7 +166,9 @@ async def skip(_, message: Message):
 @app.on_message(filters.command(["cleandb", "oc"]))
 async def stop_cmd(_, message):
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:

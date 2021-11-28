@@ -9,7 +9,9 @@ class Queue(_Queue):
     def clear(self):
         self._queue.clear()
 
+
 queues: Dict[int, Queue] = {}
+
 
 async def put(chat_id: int, **kwargs) -> int:
     if chat_id not in queues:
