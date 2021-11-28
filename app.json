@@ -1,61 +1,101 @@
 {
-  "name": "Lazy Music Bot",
-  "description": "Open-Source bot to play songs in your Telegram's Group Voice Chat. Powered by PyTgCalls.",
-  "keywords": ["music", "voicechat", "telegram"],
-  "logo": "https://telegra.ph/file/bf2cb8c33591beb292cae.jpg",
-  "repository": "https://github.com/UserLazy/LazyMusicbot",
-  "stack": "container",
-  "env": {
-    "SESSION_NAME": {
-      "description": "Pyrogram session string",
-      "required": true
+    "name": "Oda Music",
+    "description": "Music allow you to stream music trought the telegram voice chat feature.",
+    "keywords": ["music", "voice chat", "telegram"],
+    "repository": "https://github.com/UserLazy/Oda-Music",
+    "stack": "container",
+    "env": {
+        "SESSION_NAME": {
+            "description": "fill with the pyrogram session string from account",
+            "required": true
+        },
+        "OWNER_ID": {
+            "description": "fill with your telegram id as the owner of the bot",
+            "required": true,
+            "value": ""
+        },
+        "ASSID": {
+            "description": "fill with telegram id of account",
+            "required": true,
+            "value": ""
+        },
+        "ASSNAME": {
+            "description": "fill with telegram name of account",
+            "required": true,
+            "value": ""
+        },
+        "ASSUSERNAME": {
+            "description": "fill with telegram username of account without @",
+            "required": true,
+            "value": ""
+        },
+        "BOT_ID": {
+            "description": "fill with telegram id of bot",
+            "required": true,
+            "value": ""
+        },
+        "BOT_USERNAME": {
+            "description": "fill with telegram username of bot without @",
+            "required": true,
+            "value": ""
+        },
+        "BOT_NAME": {
+            "description": "fill with telegram name of bot",
+            "required": true,
+            "value": ""
+        },
+        "HEROKU_API_KEY": {
+            "description": "Your Heroku API key, get it from 'https://dashboard.heroku.com/account'",
+            "required": true,
+            "value": ""
+        },
+        "HEROKU_APP_NAME": {
+            "description": "Add the Heroku app name here. It helps with restart bot.",
+            "required": true,
+            "value": ""
+        },
+        "BG_IMG": {
+            "description": "direct link for backgroud",
+            "required": true,
+            "value": ""
+        },
+        "API_ID": {
+            "description": "your Api ID from my.telegram.org/apps",
+            "required": true,
+            "value": ""
+        },
+        "API_HASH": {
+            "description": "your Api Hash from my.telegram.org/apps",
+            "required": true,
+            "value": ""
+        },
+        "SUDO_USERS": {
+            "description": "fill with the user id who can access all function in your bot (separate with space).",
+            "required": true,
+            "value": ""
+        },
+        "DURATION_LIMIT": {
+            "description": "filled, don't change this !",
+            "required": true,
+            "value": ""
+        },
+        "BOT_TOKEN": {
+            "description": "fill with your bot token get from @BotFather on telegram",
+            "required": true,
+            "value": ""
+        },
+        "MONGO_DB_URI": {
+            "description": "fill with the mongodb url get from mongodb.cloud.com (don't use mine below !)",
+            "required": true,
+            "value": ""
+        }
     },
-    "BOT_TOKEN": {
-      "description": "A bot token from @BotFather",
-      "required": true
+    "buildpacks": [
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
     },
-    "BOT_NAME": {
-      "description": "Your MusicPlayer Bot Name.",
-      "required": false,
-      "value": ""
-    },
-    "BOT_ID": {
-      "description": "Your MusicPlayer Bot ID.",
-      "required": false,
-      "value": ""
-    },
-    "API_ID": {
-      "description": "App ID from my.telegram.org/apps",
-      "required": true
-    },
-    "HEROKU_API_KEY": {
-      "description": "your heroku apikey",
-      "required": true
-    },
-    "HEROKU_APP_NAME": {
-      "description": "Your heroku appname",
-      "required": true
-    },
-    "API_HASH": {
-      "description": "App hash from my.telegram.org/apps",
-      "required": true
-    },
-    "SUDO_USERS": {
-      "description": "List of user IDs counted as admin everywhere (separated by space).",
-      "required": true
-    },
-    "DURATION_LIMIT": {
-      "description": "Max audio duration limit for downloads (minutes).",
-      "required": true,
-      "value": "10"
-    },
-    "MONGO_DB_URI": {
-      "description": "MongoDB url",
-      "required": true,
-    },
-    "OWNER_ID": {
-      "description": "App ID from my.telegram.org/apps",
-      "required": true
+    {
+      "url": "heroku/python"
     }
-  }
+  ]
 }
