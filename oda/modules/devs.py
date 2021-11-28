@@ -10,6 +10,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from oda import app
 from oda.config import OWNER_ID
+from oda.database.chats import blacklist_chat, blacklisted_chats, whitelist_chat
 from oda.utils.decorators import sudo_users_only
 from oda.utils.filters import command
 from oda.modules import check_heroku
@@ -106,3 +107,52 @@ async def executor(client, message):
 async def runtime_func_cq(_, cq):
     runtime = cq.data.split(None, 1)[1]
     await cq.answer(runtime, show_alert=True)
+
+
+@app.on_message(command("bchat") & filters.edited)
+@sudo_users_only
+async def blacklist_chat_func(_, message: Message):
+    if len(message.command) != 2:
+        return await message.reply_text(
+            "**Usage:**\n/bchat <chat_id>"
+        )
+    chat_id = int(message.text.strip().split()[1])
+    if chat_id in await blacklisted_chats():
+        return await message.reply_text("Chat is already blacklisted.")
+    blacklisted = await blacklist_chat(chat_id)
+    if blacklisted:
+        return await message.reply_text(
+            "Chat has been successfully blacklisted"
+        )
+    await message.reply_text("Something wrong happened, check logs.")
+
+
+@app.on_message(command("wchat") & filters.edited)
+@sudo_users_only
+async def whitelist_chat_func(_, message: Message):
+    if len(message.command) != 2:
+        return await message.reply_text(
+            "**Usage:**\n/wchat <chat_id>"
+        )
+    chat_id = int(message.text.strip().split()[1])
+    if chat_id not in await blacklisted_chats():
+        return await message.reply_text("Chat is already whitelisted.")
+    whitelisted = await whitelist_chat(chat_id)
+    if whitelisted:
+        return await message.reply_text(
+            "Chat has been successfully whitelisted"
+        )
+    await message.reply_text("Something wrong happened, check logs.")
+
+
+@app.on_message(command("blacklisted") & filters.edited)
+@sudo_users_only
+async def blacklisted_chats_func(_, message: Message):
+    text = ""
+    for count, chat_id in enumerate(await blacklisted_chats(), 1):
+        try:
+            title = (await app.get_chat(chat_id)).title
+        except Exception:
+            title = "Private"
+        text += f"**{count}. {title}** [`{chat_id}`]\n"
+    await message.reply_text(text)
