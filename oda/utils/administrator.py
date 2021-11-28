@@ -16,7 +16,7 @@ async def unauthorised(message: Message):
     chatID = message.chat.id
     text = (
         "You don't have the required permission to perform this action."
-        + f"\n__REQUIRES ADMIN WITH MANAGE VC RIGHTS__"
+        + f"\n__REQUIRES ADMIN WITH DELETE MESSAGE__"
     )
     try:
         await message.reply_text(text)
