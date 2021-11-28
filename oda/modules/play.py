@@ -39,7 +39,7 @@ from oda.database.queue import (
 from oda import app
 import oda.tgcalls
 from oda.tgcalls import youtube
-from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID
+from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID, SUPPORT, UPDATE
 from oda.utils.filters import command
 from oda.utils.decorators import errors, sudo_users_only
 from oda.utils.administrator import adminsOnly
@@ -288,8 +288,8 @@ async def play(_, message: Message):
         keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🚨 Support", url="t.me/OdaSupport"),
-                    InlineKeyboardButton("📡 Updates", url="t.me/UserLazyXBot"),
+                    InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
+                    InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
                 ],
                 [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
             ]
@@ -324,14 +324,14 @@ async def play(_, message: Message):
                 secmul *= 60
 
             keyboard = InlineKeyboardMarkup(
+            [
                 [
-                    [
-                        InlineKeyboardButton("🚨 Support", url="t.me/OdaSupport"),
-                        InlineKeyboardButton("📡 Updates", url="t.me/UserLazyXBot"),
-                    ],
-                    [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
-                ]
-            )
+                    InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
+                    InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
+                ],
+                [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
+            ]
+        )
 
         except Exception as e:
             title = "NaN"
@@ -455,8 +455,8 @@ async def play(_, message: Message):
         keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🚨 Support", url="t.me/OdaSupport"),
-                    InlineKeyboardButton("📡 Updates", url="t.me/UserLazyXBot"),
+                    InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
+                    InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
                 ],
                 [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
             ]
