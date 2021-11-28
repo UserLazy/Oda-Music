@@ -14,13 +14,14 @@ ASSNAME = ""
 ASSUSERNAME = ""
 
 app = Client(
-    'odamusic',
+    "odamusic",
     config.API_ID,
     config.API_HASH,
     bot_token=config.BOT_TOKEN,
 )
 
 client = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
+
 
 def all_info(app, client):
     global BOT_ID, BOT_NAME, BOT_USERNAME
@@ -40,6 +41,7 @@ def all_info(app, client):
         else getme1.first_name
     )
     ASSUSERNAME = getme1.username
+
 
 app.start()
 client.start()

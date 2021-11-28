@@ -5,7 +5,6 @@ from oda.database import db
 restart_stagedb = db.restart_stage
 
 
-
 async def start_restart_stage(chat_id: int, message_id: int):
     await restart_stagedb.update_one(
         {"something": "something"},

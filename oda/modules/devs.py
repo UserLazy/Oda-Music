@@ -21,8 +21,8 @@ from oda.modules import check_heroku
 async def gib_restart(client, message, hap):
     msg_ = await message.reply_text("[Oda Music] - Restarting...")
     hap.restart()
-    
-    
+
+
 async def aexec(code, client, message):
     exec(
         "async def __aexec(client, message): "
@@ -113,17 +113,13 @@ async def runtime_func_cq(_, cq):
 @sudo_users_only
 async def blacklist_chat_func(_, message: Message):
     if len(message.command) != 2:
-        return await message.reply_text(
-            "**Usage:**\n/bchat <chat_id>"
-        )
+        return await message.reply_text("**Usage:**\n/bchat <chat_id>")
     chat_id = int(message.text.strip().split()[1])
     if chat_id in await blacklisted_chats():
         return await message.reply_text("Chat is already blacklisted.")
     blacklisted = await blacklist_chat(chat_id)
     if blacklisted:
-        return await message.reply_text(
-            "Chat has been successfully blacklisted"
-        )
+        return await message.reply_text("Chat has been successfully blacklisted")
     await message.reply_text("Something wrong happened, check logs.")
 
 
@@ -131,17 +127,13 @@ async def blacklist_chat_func(_, message: Message):
 @sudo_users_only
 async def whitelist_chat_func(_, message: Message):
     if len(message.command) != 2:
-        return await message.reply_text(
-            "**Usage:**\n/wchat <chat_id>"
-        )
+        return await message.reply_text("**Usage:**\n/wchat <chat_id>")
     chat_id = int(message.text.strip().split()[1])
     if chat_id not in await blacklisted_chats():
         return await message.reply_text("Chat is already whitelisted.")
     whitelisted = await whitelist_chat(chat_id)
     if whitelisted:
-        return await message.reply_text(
-            "Chat has been successfully whitelisted"
-        )
+        return await message.reply_text("Chat has been successfully whitelisted")
     await message.reply_text("Something wrong happened, check logs.")
 
 

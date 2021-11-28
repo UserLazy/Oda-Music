@@ -4,6 +4,7 @@ from functools import wraps
 from pyrogram import Client
 from oda.config import OWNER_ID
 
+
 def split_limits(text):
     if len(text) < 2048:
         return [text]

@@ -22,7 +22,13 @@ from pytgcalls.types.input_stream import InputAudioStream
 from youtube_search import YoutubeSearch
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, Voice, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
+from pyrogram.types import (
+    Message,
+    Voice,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    CallbackQuery,
+)
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 
 from oda.tgcalls import calls, queues
@@ -39,14 +45,24 @@ from oda.database.queue import (
 from oda import app
 import oda.tgcalls
 from oda.tgcalls import youtube
-from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID, SUPPORT, UPDATE, BOT_USERNAME
+from oda.config import (
+    DURATION_LIMIT,
+    que,
+    SUDO_USERS,
+    BOT_ID,
+    ASSNAME,
+    ASSUSERNAME,
+    ASSID,
+    SUPPORT,
+    UPDATE,
+    BOT_USERNAME,
+)
 from oda.utils.filters import command
 from oda.utils.decorators import errors, sudo_users_only
 from oda.utils.administrator import adminsOnly
 from oda.utils.errors import DurationLimitError
 from oda.utils.gets import get_url, get_file_name
 from oda.modules.admins import member_permissions
-
 
 
 # plus
@@ -128,7 +144,9 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
 async def hfmm(_, message):
     global DISABLED_GROUPS
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -238,18 +256,24 @@ async def play(_, message: Message):
         return
 
     try:
-        b = await app.get_chat_member(message.chat.id , ASSID) 
+        b = await app.get_chat_member(message.chat.id, ASSID)
         if b.status == "kicked":
-            await message.reply_text(f"{ASSNAME}(@{ASSUSERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use Music")
+            await message.reply_text(
+                f"{ASSNAME}(@{ASSUSERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use Music"
+            )
             return
     except UserNotParticipant:
         if message.chat.username:
-            try: 
+            try:
                 await ASS_ACC.join_chat(f"{message.chat.username}")
-                await message.reply(f"{ASSNAME} Joined Successfully",) 
+                await message.reply(
+                    f"{ASSNAME} Joined Successfully",
+                )
                 await remove_active_chat(chat_id)
             except Exception as e:
-                await message.reply_text(f"__**Assistant Failed To Join**__\n\n**Reason**:{e}")
+                await message.reply_text(
+                    f"__**Assistant Failed To Join**__\n\n**Reason**:{e}"
+                )
                 return
         else:
             try:
@@ -258,12 +282,16 @@ async def play(_, message: Message):
                     kontol = (invite_link.replace("+", "")).split("t.me/")[1]
                     link_bokep = f"https://t.me/joinchat/{kontol}"
                 await ASS_ACC.join_chat(link_bokep)
-                await message.reply(f"{ASSNAME} Joined Successfully",) 
+                await message.reply(
+                    f"{ASSNAME} Joined Successfully",
+                )
                 await remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
-                return await message.reply_text(f"__**Assistant Failed To Join**__\n\n**Reason**:{e}")
+                return await message.reply_text(
+                    f"__**Assistant Failed To Join**__\n\n**Reason**:{e}"
+                )
 
     audio = (
         (message.reply_to_message.audio or message.reply_to_message.voice)
@@ -324,14 +352,14 @@ async def play(_, message: Message):
                 secmul *= 60
 
             keyboard = InlineKeyboardMarkup(
-            [
                 [
-                    InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
-                    InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
-                ],
-                [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
-            ]
-        )
+                    [
+                        InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
+                        InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
+                    ],
+                    [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
+                ]
+            )
 
         except Exception as e:
             title = "NaN"
