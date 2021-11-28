@@ -46,6 +46,8 @@
 ### Get String Session</h5>
 [![GenerateString](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](http://replit.com/@UserLazy/UserLazyString)
 
+**NOTE**: Select P for pyrogram string
+
 ### Credits
 - [UserLazy](https://github.com/UserLazy): Dev
 - [Laky](https://github.com/Laky-64) & [Andrew](https://github.com/AndrewLaneX): PyTgCalls
