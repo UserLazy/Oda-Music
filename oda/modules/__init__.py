@@ -24,8 +24,8 @@ def get_text(message: Message) -> [None, str]:
             return None
     else:
         return None
-    
-    
+
+
 heroku_client = heroku3.from_key(HEROKU_API_KEY) if HEROKU_API_KEY else None
 
 
@@ -77,11 +77,12 @@ def fetch_heroku_git_url(api_key, app_name):
         return None
     return heroku_app.git_url.replace("https://", "https://api:" + api_key + "@")
 
+
 HEROKU_URL = fetch_heroku_git_url(HEROKU_API_KEY, HEROKU_APP_NAME)
 
 
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
-    """ run command in terminal """
+    """run command in terminal"""
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(
         *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
