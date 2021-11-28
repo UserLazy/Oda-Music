@@ -43,7 +43,7 @@ def song(client, message):
 
     except Exception as e:
         m.edit(
-            "✖️ Found Nothing. Sorry.\n\nTry another keywork or maybe spell it properly."
+            "✖️ Found Nothing. Sorry.\n\nTry another keyword or maybe spell it properly."
         )
         print(str(e))
         return
