@@ -3,16 +3,12 @@ import asyncio
 from oda import app
 from oda.config import SUDO_USERS
 from oda.utils.filters import command
-from oda.database.chats import (add_served_chat, add_served_user, blacklisted_chats, get_served_chats)
+from oda.database.chats import (add_served_chat, blacklisted_chats, get_served_chats)
                                 
 chat_watcher_group = 10
 
 @app.on_message(group=chat_watcher_group)
 async def chat_watcher_func(_, message):
-    if message.from_user:
-        user_id = message.from_user.id
-        await add_served_user(user_id)
-
     chat_id = message.chat.id
     blacklisted_chats_list = await blacklisted_chats()
 
