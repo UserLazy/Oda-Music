@@ -39,7 +39,7 @@ from oda.database.queue import (
 from oda import app
 import oda.tgcalls
 from oda.tgcalls import youtube
-from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID, SUPPORT, UPDATE
+from oda.config import DURATION_LIMIT, que, SUDO_USERS, BOT_ID, ASSNAME, ASSUSERNAME, ASSID, SUPPORT, UPDATE, BOT_USERNAME
 from oda.utils.filters import command
 from oda.utils.decorators import errors, sudo_users_only
 from oda.utils.administrator import adminsOnly
@@ -120,7 +120,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
 
 
 @Client.on_message(
-    command(["musicplayer", "musicplayer@OdaRobot"])
+    command(["musicplayer", f"musicplayer@{BOT_USERNAME}"])
     & ~filters.edited
     & ~filters.bot
     & ~filters.private
@@ -184,7 +184,7 @@ async def closed(_, query: CallbackQuery):
 
 # play
 @Client.on_message(
-    command(["play", "play@OdaRobot"])
+    command(["play", f"play@{BOT_USERNAME}"])
     & filters.group
     & ~filters.edited
     & ~filters.forwarded
