@@ -78,9 +78,7 @@ async def rem(USER, message):
         return
 
 
-@app.on_message(
-    filters.command("ubleaveall") & filters.user(SUDO_USERS) & ~filters.edited
-)
+@app.on_message(command(["ubleaveall"]) & filters.user(SUDO_USERS) & ~filters.edited)
 async def broadcast_message(_, message):
     if len(message.command) < 2:
         return await message.reply_text("**Usage**:\n/ubleaveall")
