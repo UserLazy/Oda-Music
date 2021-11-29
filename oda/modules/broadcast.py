@@ -1,7 +1,7 @@
 import asyncio
 
 from pyrogram import filters
-from pyrogram.errors FloodWait
+from pyrogram.errors import FloodWait
 
 from oda import app
 from oda.config import SUDO_USERS
