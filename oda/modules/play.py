@@ -194,7 +194,7 @@ async def closed(_, query: CallbackQuery):
     if permission not in permissions:
         return await query.answer(
             "You don't have enough permissions to perform this action.\n"
-            + f"Permission needed: {permission}",
+            + f"❌ Permission: {permission}",
             show_alert=True,
         )
     await query.message.delete()
@@ -202,7 +202,7 @@ async def closed(_, query: CallbackQuery):
 
 # play
 @Client.on_message(
-    command(["play", f"play@{BOT_USERNAME}"])
+    command(["play", f"play@{BOT_USERNAME}", "p"])
     & filters.group
     & ~filters.edited
     & ~filters.forwarded
@@ -227,31 +227,31 @@ async def play(_, message: Message):
     c = await app.get_chat_member(message.chat.id, BOT_ID)
     if c.status != "administrator":
         await lel.edit(
-            f"I need to be admin with some permissions:\n\n- **can_manage_voice_chats:** To manage voice chats\n- **can_delete_messages:** To delete Music's Searched Waste\n- **can_invite_users**: For inviting assistant to chat\n- **can_restrict_members**: For Protecting Music from Spammers."
+            f"I need to be admin with some permissions:\n\n❌ **can_manage_voice_chats:** To manage voice chats\n❌ **can_delete_messages:** To delete music's searched waste\n❌ **can_invite_users**: For inviting assistant to chat\n❌ **can_restrict_members**: For protecting music from spammers."
         )
         return
     if not c.can_manage_voice_chats:
         await lel.edit(
             "I don't have the required permission to perform this action."
-            + "\n**Permission:** Manage Voice Chats"
+            + "\n❌ **Permission:** Manage Voice Chats"
         )
         return
     if not c.can_delete_messages:
         await lel.edit(
             "I don't have the required permission to perform this action."
-            + "\n**Permission:** Delete Message"
+            + "\n❌ **Permission:** Delete Message"
         )
         return
     if not c.can_invite_users:
         await lel.edit(
             "I don't have the required permission to perform this action."
-            + "\n**Permission:** Invite User Via Invitelink"
+            + "\n❌ **Permission:** Invite User Via Invitelink"
         )
         return
     if not c.can_restrict_members:
         await lel.edit(
             "I don't have the required permission to perform this action."
-            + "\n**Permission:** Ban User"
+            + "\n❌ **Permission:** Ban User"
         )
         return
 
