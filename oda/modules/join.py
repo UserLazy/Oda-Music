@@ -3,12 +3,12 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
-from oda import app
+from oda import app, ASSUSERNAME
 from oda.utils.decorators import sudo_users_only, errors
 from oda.utils.administrator import adminsOnly
 from oda.utils.filters import command
 from oda.tgcalls import client as USER
-from oda.config import SUDO_USERS, ASSUSERNAME
+from oda.config import SUDO_USERS
 
 
 @app.on_message(
@@ -39,7 +39,7 @@ async def addchannel(client, message):
     try:
         user = await USER.get_me()
     except:
-        user.first_name = f"@{ASSUSERNAME}"
+        user.first_name = f"{ASSUSERNAME}"
 
     try:
         await USER.join_chat(link_bokep)
@@ -50,7 +50,7 @@ async def addchannel(client, message):
     except Exception as e:
         print(e)
         await message.reply_text(
-            f"❌ **Assistant ({user.first_name}) can't join your group due to many join requests for userbot!\nMake sure the user is not banned in the group."
+            f"❌ **Assistant ({user.first_name}) can't join your group due to many join requests for userbot!\n‼️ Make sure the user is not banned in the group."
             f"\n\n» Manually add the {user.first_name} to your group.</b>",
         )
         return
