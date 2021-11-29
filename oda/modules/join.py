@@ -32,7 +32,7 @@ async def addchannel(client, message):
             link_bokep = f"https://t.me/joinchat/{kontol}"
     except:
         await message.reply_text(
-            "<b>Add me admin first</b>",
+            "**Add me admin first**",
         )
         return
 
@@ -45,7 +45,7 @@ async def addchannel(client, message):
         await USER.join_chat(link_bokep)
     except UserAlreadyParticipant:
         await message.reply_text(
-            f"<b>{user.first_name} Already join this Group</b>",
+            f"🔴 **{user.first_name} Already join this group**",
         )
     except Exception as e:
         print(e)
