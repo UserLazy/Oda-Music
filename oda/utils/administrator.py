@@ -2,6 +2,7 @@ from functools import wraps
 
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
+
 from oda import app
 from oda.config import SUDO_USERS
 from oda.modules.admins import member_permissions
@@ -16,7 +17,7 @@ async def unauthorised(message: Message):
     chatID = message.chat.id
     text = (
         "You don't have the required permission to perform this action."
-        + f"\n__REQUIRES ADMIN WITH DELETE MESSAGE__"
+        + f"\n❌ __Required permission admin to delete message__"
     )
     try:
         await message.reply_text(text)
