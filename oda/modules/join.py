@@ -80,8 +80,6 @@ async def rem(USER, message):
 
 @app.on_message(command(["ubleaveall"]) & filters.user(SUDO_USERS) & ~filters.edited)
 async def broadcast_message(_, message):
-    if len(message.command) < 2:
-        return await message.reply_text("**Usage**:\n/ubleaveall")
     sleep_time = 0.1
     text = message.text.split(None, 1)[1]
     left = 0
