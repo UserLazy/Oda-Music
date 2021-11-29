@@ -4,7 +4,6 @@ from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
 from oda import app
-from oda.database.chats import get_served_chats
 from oda.utils.decorators import sudo_users_only, errors
 from oda.utils.administrator import adminsOnly
 from oda.utils.filters import command
@@ -78,22 +77,19 @@ async def rem(USER, message):
         return
 
 
-@app.on_message(command(["ubleaveall"]) & filters.user(SUDO_USERS) & ~filters.edited)
-async def broadcast_message(client, message):
-    sleep_time = 0.1
+@app.on_message(command(["userbotleaveall"]))
+@sudo_users_only
+async def bye(client, message):
     left = 0
-    schats = await get_served_chats()
-    chats = [int(chat["chat_id"]) for chat in schats]
-    m = await message.reply_text(
-        f"Leaving in progress, will take {len(chats) * sleep_time} seconds."
-    )
-    for i in chats:
+    sleep_time = 0.1
+    lol = await message.reply(f"**Assistant leaving all groups, Processing....**")
+    async for dialog in USER.iter_dialogs():
         try:
-            await USER.leave_chat(i)
+            await USER.leave_chat(dialog.chat.id)
             await asyncio.sleep(sleep_time)
             left += 1
         except FloodWait as e:
             await asyncio.sleep(int(e.x))
         except Exception:
             pass
-    await m.edit(f"**Assistant leave {left} Chats.**")
+    await lol.edit(f"Assistant leaving... Left: {left} chats.")
