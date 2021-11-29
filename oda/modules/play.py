@@ -401,7 +401,7 @@ async def play(_, message: Message):
                     try:
                         if eta > 2:
                             lel.edit(
-                                f"**Downloading** {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                                f"Downloading {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
                             )
                     except Exception as e:
                         pass
@@ -521,7 +521,7 @@ async def play(_, message: Message):
                     try:
                         if eta > 2:
                             lel.edit(
-                                f"**Downloading** {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                                f"Downloading {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
                             )
                     except Exception as e:
                         pass
