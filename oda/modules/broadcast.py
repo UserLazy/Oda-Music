@@ -6,6 +6,7 @@ from pyrogram.errors import FloodWait
 from oda import app
 from oda.config import SUDO_USERS
 from oda.utils.filters import command
+from oda.tgcalls import client as USER
 from oda.database.chats import add_served_chat, blacklisted_chats, get_served_chats
 
 chat_watcher_group = 10
@@ -20,6 +21,10 @@ async def chat_watcher_func(_, message):
         return
 
     if chat_id in blacklisted_chats_list:
+        try:
+           await USER.leave_chat(chat_id)
+        except:
+           pass
         return await app.leave_chat(chat_id)
 
     await add_served_chat(chat_id)
