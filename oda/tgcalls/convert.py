@@ -5,8 +5,8 @@ from os import path
 
 class FFmpegReturnCodeError(Exception):
     pass
-  
-    
+
+
 async def convert(file_path: str) -> str:
     out = path.basename(file_path)
     out = out.split(".")
@@ -21,13 +21,13 @@ async def convert(file_path: str) -> str:
     try:
         proc = await asyncio.create_subprocess_shell(
             cmd=(
-                "ffmpeg " 
-                "-y -i " 
+                "ffmpeg "
+                "-y -i "
                 f"{file_path} "
                 "-f s16le "
                 "-ac 1 "
                 "-ar 48000 "
-                "-acodec pcm_s16le " 
+                "-acodec pcm_s16le "
                 f"{out}"
             ),
             stdin=asyncio.subprocess.PIPE,
