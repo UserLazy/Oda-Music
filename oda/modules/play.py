@@ -156,32 +156,36 @@ async def hfmm(_, message):
     except:
         return
     if len(message.command) != 2:
-        await message.reply_text(
-            "I only know `/musicplayer on` and `/musicplayer off`"
-        )
+        await message.reply_text("I only know `/musicplayer on` and `/musicplayer off`")
         return
     status = message.text.split(None, 1)[1]
     message.chat.id
     if status in ["ON", "on", "On"]:
         lel = await message.reply("`Processing...`")
         if message.chat.id not in DISABLED_GROUPS:
-            await lel.edit(f"🔴 Music player already activate in **{message.chat.title}**")
+            await lel.edit(
+                f"🔴 Music player already activate in **{message.chat.title}**"
+            )
             return
         DISABLED_GROUPS.remove(message.chat.id)
-        await lel.edit(f"✅ Music player has been turn on successfully in **{message.chat.title}**")
+        await lel.edit(
+            f"✅ Music player has been turn on successfully in **{message.chat.title}**"
+        )
 
     elif status in ["OFF", "off", "Off"]:
         lel = await message.reply("`Processing...`")
 
         if message.chat.id in DISABLED_GROUPS:
-            await lel.edit(f"🔴 Music player already not active in **{message.chat.title}**")
+            await lel.edit(
+                f"🔴 Music player already not active in **{message.chat.title}**"
+            )
             return
         DISABLED_GROUPS.append(message.chat.id)
-        await lel.edit(f"✅ Music player has been turn off successfully **{message.chat.title}**")
-    else:
-        await message.reply_text(
-            "I only know `/musicplayer on` and `/musicplayer off`"
+        await lel.edit(
+            f"✅ Music player has been turn off successfully **{message.chat.title}**"
         )
+    else:
+        await message.reply_text("I only know `/musicplayer on` and `/musicplayer off`")
 
 
 @Client.on_callback_query(filters.regex(pattern=r"^(cls)$"))
@@ -216,7 +220,9 @@ async def play(_, message: Message):
         )
 
     if message.chat.id in DISABLED_GROUPS:
-        await message.reply("🔴 **Music player is turned off, ask the admin to turn on it on!**")
+        await message.reply(
+            "🔴 **Music player is turned off, ask the admin to turn on it on!**"
+        )
         return
     lel = await message.reply("🔄 **Processing...**")
 
