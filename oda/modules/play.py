@@ -271,7 +271,7 @@ async def play(_, message: Message):
             try:
                 await ASS_ACC.join_chat(f"{message.chat.username}")
                 await message.reply(
-                    f"{ASSNAME} joined successfully",
+                    f"✅ **{ASSNAME} joined successfully**",
                 )
                 await remove_active_chat(chat_id)
             except Exception as e:
@@ -287,7 +287,7 @@ async def play(_, message: Message):
                     link_bokep = f"https://t.me/joinchat/{kontol}"
                 await ASS_ACC.join_chat(link_bokep)
                 await message.reply(
-                    f"{ASSNAME} joined successfully",
+                    f"✅ **{ASSNAME} joined successfully**",
                 )
                 await remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
@@ -480,7 +480,7 @@ async def play(_, message: Message):
 
         except Exception as e:
             await lel.edit(
-                "❌ Song not found.\n\nTry another song or maybe spell it properly."
+                "❌ Song not found.\n\nTry another keyword or /play <yt url>."
             )
             print(str(e))
             return
