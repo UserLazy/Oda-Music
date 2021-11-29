@@ -15,6 +15,14 @@ from oda.config import SUDO_USERS, ASSUSERNAME
 @app.on_message(command(["userbotjoin", "odajoin"]) & ~filters.private & ~filters.bot)
 @errors
 async def addchannel(client, message):
+    if message.sender_chat:
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     chid = message.chat.id
     try:
         invite_link = await message.chat.export_invite_link()
@@ -52,6 +60,14 @@ async def addchannel(client, message):
 
 @USER.on_message(filters.group & command(["userbotleave", "odaleave"]))
 async def rem(USER, message):
+    if message.sender_chat:
+        return await message.reply_text(
+            "You're an __Anonymous Admin__!\nRevert back to User Account."
+        )
+    permission = "can_delete_messages"
+    m = await adminsOnly(permission, message)
+    if m == 1:
+        return
     try:
         await USER.leave_chat(message.chat.id)
     except:
