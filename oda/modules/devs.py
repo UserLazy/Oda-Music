@@ -109,7 +109,7 @@ async def runtime_func_cq(_, cq):
     await cq.answer(runtime, show_alert=True)
 
 
-@app.on_message(command("bchat") & filters.edited)
+@app.on_message(command(["bchat"]) & filters.edited)
 @sudo_users_only
 async def blacklist_chat_func(_, message: Message):
     if len(message.command) != 2:
@@ -123,7 +123,7 @@ async def blacklist_chat_func(_, message: Message):
     await message.reply_text("Something wrong happened, check logs.")
 
 
-@app.on_message(command("wchat") & filters.edited)
+@app.on_message(command(["wchat"]) & filters.edited)
 @sudo_users_only
 async def whitelist_chat_func(_, message: Message):
     if len(message.command) != 2:
@@ -137,7 +137,7 @@ async def whitelist_chat_func(_, message: Message):
     await message.reply_text("Something wrong happened, check logs.")
 
 
-@app.on_message(command("blacklisted") & filters.edited)
+@app.on_message(command(["blacklisted"]) & filters.edited)
 @sudo_users_only
 async def blacklisted_chats_func(_, message: Message):
     text = ""
