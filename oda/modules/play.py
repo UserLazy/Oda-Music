@@ -145,7 +145,7 @@ async def hfmm(_, message):
     global DISABLED_GROUPS
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -157,7 +157,7 @@ async def hfmm(_, message):
         return
     if len(message.command) != 2:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and /musicplayer `off only`"
+            "I only know `/musicplayer on` and `/musicplayer off`"
         )
         return
     status = message.text.split(None, 1)[1]
@@ -165,24 +165,22 @@ async def hfmm(_, message):
     if status in ["ON", "on", "On"]:
         lel = await message.reply("`Processing...`")
         if message.chat.id not in DISABLED_GROUPS:
-            await lel.edit("Music Player Already Activated In This Chat")
+            await lel.edit(f"🔴 Music player already activate in **{message.chat.title}**")
             return
         DISABLED_GROUPS.remove(message.chat.id)
-        await lel.edit(f"Music Player Successfully Enabled in **{message.chat.title}**")
+        await lel.edit(f"✅ Music player has been turn on successfully in **{message.chat.title}**")
 
     elif status in ["OFF", "off", "Off"]:
         lel = await message.reply("`Processing...`")
 
         if message.chat.id in DISABLED_GROUPS:
-            await lel.edit("Music Player Already turned off In This Chat")
+            await lel.edit(f"🔴 Music player already not active in **{message.chat.title}**")
             return
         DISABLED_GROUPS.append(message.chat.id)
-        await lel.edit(
-            f"Music Player Successfully Deactivated in **{message.chat.title}**"
-        )
+        await lel.edit(f"✅ Music player has been turn off successfully **{message.chat.title}**")
     else:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and /musicplayer `off only`"
+            "I only know `/musicplayer on` and `/musicplayer off`"
         )
 
 
@@ -214,11 +212,11 @@ async def play(_, message: Message):
     user_id = message.from_user.id
     if message.sender_chat:
         return await message.reply_text(
-            "You're an **Anonymous Admin**!\nRevert back to User Account From Admin Rights."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
 
     if message.chat.id in DISABLED_GROUPS:
-        await message.reply("**Musicplayer is Disable, ask admin for Enable it!**")
+        await message.reply("🔴 **Music player is turned off, ask the admin to turn on it on!**")
         return
     lel = await message.reply("🔄 **Processing...**")
 
@@ -259,7 +257,7 @@ async def play(_, message: Message):
         b = await app.get_chat_member(message.chat.id, ASSID)
         if b.status == "kicked":
             await message.reply_text(
-                f"{ASSNAME}(@{ASSUSERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use Music"
+                f"🔴 {ASSNAME} (@{ASSUSERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use music"
             )
             return
     except UserNotParticipant:
@@ -267,12 +265,12 @@ async def play(_, message: Message):
             try:
                 await ASS_ACC.join_chat(f"{message.chat.username}")
                 await message.reply(
-                    f"{ASSNAME} Joined Successfully",
+                    f"{ASSNAME} joined successfully",
                 )
                 await remove_active_chat(chat_id)
             except Exception as e:
                 await message.reply_text(
-                    f"__**Assistant Failed To Join**__\n\n**Reason**:{e}"
+                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
                 )
                 return
         else:
@@ -283,14 +281,14 @@ async def play(_, message: Message):
                     link_bokep = f"https://t.me/joinchat/{kontol}"
                 await ASS_ACC.join_chat(link_bokep)
                 await message.reply(
-                    f"{ASSNAME} Joined Successfully",
+                    f"{ASSNAME} joined successfully",
                 )
                 await remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
                 return await message.reply_text(
-                    f"__**Assistant Failed To Join**__\n\n**Reason**:{e}"
+                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
                 )
 
     await message.delete()
