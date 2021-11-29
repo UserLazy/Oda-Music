@@ -11,7 +11,7 @@ from oda.tgcalls import client as USER
 from oda.config import SUDO_USERS, ASSUSERNAME
 
 
-@app.on_message(command(["userbotjoin", "odajoin"]) & ~filters.private & ~filters.bot)
+@app.on_message(command(["userbotjoin", "odajoin", "oj"]) & ~filters.private & ~filters.bot)
 @errors
 async def addchannel(client, message):
     if message.sender_chat:
@@ -43,21 +43,18 @@ async def addchannel(client, message):
         await USER.join_chat(link_bokep)
     except UserAlreadyParticipant:
         await message.reply_text(
-            f"<b>{user.first_name} Allready join this Group</b>",
+            f"<b>{user.first_name} Already join this Group</b>",
         )
     except Exception as e:
         print(e)
         await message.reply_text(
-            f"<b>Flood Wait Error\n{user.first_name} can't join your group due to many join requests for userbot! Make sure the user is not banned in the group."
+            f"<b>Assistant ({user.first_name}) can't join your group due to many join requests for userbot!\nMake sure the user is not banned in the group."
             "\n\nOr manually add the Assistant bot to your Group and try again.</b>",
         )
         return
-    await message.reply_text(
-        f"<b>{user.first_name} Join Seccsesfully</b>",
-    )
 
 
-@USER.on_message(filters.group & command(["userbotleave", "odaleave"]))
+@USER.on_message(filters.group & command(["userbotleave", "odaleave", "odaleft"]))
 async def rem(USER, message):
     if message.sender_chat:
         return await message.reply_text(
@@ -71,13 +68,13 @@ async def rem(USER, message):
         await USER.leave_chat(message.chat.id)
     except:
         await message.reply_text(
-            "<b>Users cannot leave your group! Probably waiting for floodwaits.\n\nOr manually remove me from your Group</b>"
+            "<b>Assistant cannot leave your group! Probably waiting for floodwaits.\n\nOr manually remove me from your Group</b>"
         )
 
         return
 
 
-@app.on_message(command(["userbotleaveall"]))
+@app.on_message(command(["userbotleaveall", "leaveall"]))
 @sudo_users_only
 async def bye(client, message):
     left = 0
