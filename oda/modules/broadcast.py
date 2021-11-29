@@ -81,7 +81,7 @@ async def broadcast_message(_, message):
     
 # Broadcast without pinned
 
-@app.on_message(command("broadcast") & filters.user(SUDOERS) & ~filters.edited)
+@app.on_message(command("broadcast") & filters.user(SUDO_USERS) & ~filters.edited)
 async def broadcast_message(_, message):
     if len(message.command) < 2:
         return await message.reply_text("**Usage**:\n/broadcast <message>")
