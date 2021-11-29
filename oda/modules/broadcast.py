@@ -22,9 +22,9 @@ async def chat_watcher_func(_, message):
 
     if chat_id in blacklisted_chats_list:
         try:
-           await USER.leave_chat(chat_id)
+            await USER.leave_chat(chat_id)
         except:
-           pass
+            pass
         return await app.leave_chat(chat_id)
 
     await add_served_chat(chat_id)
