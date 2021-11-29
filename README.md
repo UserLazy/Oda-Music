@@ -28,14 +28,14 @@
 - `/skip` - play next song
 - `/end` - stop music play
 - `/cleandb` - clear all files
+- `/userbotjoin` - add assistant
+- `/userbotleave` - remove assistant
 
 #### Sudo & Owner only
 - `/restart` - restart bot
 - `/gcast` - broadcast to groups
 - `/exec` - excute a code
-- `/bchat` - add blacklist groups
-- `/wchat` - add whitelist groups
-- `/blacklisted` - get blacklist groups
+- `/userbotleaveall` - remove assistant of all groups
 
 ### Deploy To Heroku</h4>
 
@@ -51,5 +51,4 @@
 ### Credits
 - [UserLazy](https://github.com/UserLazy): Dev
 - [Laky](https://github.com/Laky-64) & [Andrew](https://github.com/AndrewLaneX): PyTgCalls
-- [WilliamButcherBot](https://github.com/TheHamkerCat/WilliamButcherBot): Blacklist Modules
 - [Oda Nobunaga](https://t.me/OdaRobot): Bot
