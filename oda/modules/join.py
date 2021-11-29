@@ -1,7 +1,7 @@
 import asyncio
 
 from pyrogram import Client, filters
-from pyrogram.errors import UserAlreadyParticipant
+from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
 from oda import app
 from oda.database.chats import get_served_chats
@@ -79,9 +79,8 @@ async def rem(USER, message):
 
 
 @app.on_message(command(["ubleaveall"]) & filters.user(SUDO_USERS) & ~filters.edited)
-async def broadcast_message(_, message):
+async def broadcast_message(client, message):
     sleep_time = 0.1
-    text = message.text.split(None, 1)[1]
     left = 0
     schats = await get_served_chats()
     chats = [int(chat["chat_id"]) for chat in schats]
