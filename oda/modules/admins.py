@@ -148,7 +148,9 @@ async def skip(_, message: Message):
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
-            await message.reply_text("❌ **No more music in Queue** \n\n**»** `Leaving Voice Chat...`")
+            await message.reply_text(
+                "❌ **No more music in Queue** \n\n**»** `Leaving Voice Chat...`"
+            )
             await calls.pytgcalls.leave_group_call(chat_id)
             return
         else:
@@ -160,7 +162,9 @@ async def skip(_, message: Message):
                     ),
                 ),
             )
-            await message.reply_text(f"⏭ **Skipped to the next song.**\n\n**By** {checking}")
+            await message.reply_text(
+                f"⏭ **Skipped to the next song.**\n\n**By** {checking}"
+            )
 
 
 @app.on_message(filters.command(["cleandb", "oc"]))
@@ -184,4 +188,6 @@ async def stop_cmd(_, message):
         await calls.pytgcalls.leave_group_call(chat_id)
     except:
         pass
-    await message.reply_text(f"✅ Erased queues, raw files, and downloads in **{message.chat.title}**\n\n**By** {checking}")
+    await message.reply_text(
+        f"✅ Erased queues, raw files, and downloads in **{message.chat.title}**\n\n**By** {checking}"
+    )

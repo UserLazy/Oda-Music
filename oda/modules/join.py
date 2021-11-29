@@ -11,7 +11,9 @@ from oda.tgcalls import client as USER
 from oda.config import SUDO_USERS, ASSUSERNAME
 
 
-@app.on_message(command(["userbotjoin", "odajoin", "oj"]) & ~filters.private & ~filters.bot)
+@app.on_message(
+    command(["userbotjoin", "odajoin", "oj"]) & ~filters.private & ~filters.bot
+)
 @errors
 async def addchannel(client, message):
     if message.sender_chat:
