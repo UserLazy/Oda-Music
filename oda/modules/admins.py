@@ -56,7 +56,7 @@ from oda.utils.administrator import adminsOnly
 async def pause(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -74,14 +74,14 @@ async def pause(_, message: Message):
         )
     await music_off(chat_id)
     await calls.pytgcalls.pause_stream(chat_id)
-    await message.reply_text(f"🎧 Voicechat Paused by {checking}!")
+    await message.reply_text(f"🎧 **Voicechat Paused**\n\n**By** {checking}!")
 
 
 @app.on_message(command(["resume", "or"]) & other_filters)
 async def resume(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -100,14 +100,14 @@ async def resume(_, message: Message):
     else:
         await music_on(chat_id)
         await calls.pytgcalls.resume_stream(chat_id)
-        await message.reply_text(f"🎧 Voicechat Resumed by {checking}!")
+        await message.reply_text(f"🎧 **Voicechat Resumed**\n\n**By** {checking}!")
 
 
 @app.on_message(command(["end", "oe"]) & other_filters)
 async def stop(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -122,7 +122,7 @@ async def stop(_, message: Message):
             pass
         await remove_active_chat(chat_id)
         await calls.pytgcalls.leave_group_call(chat_id)
-        await message.reply_text(f"🎧 Voicechat End/Stopped by {checking}!")
+        await message.reply_text(f"🎧 **Voicechat End/Stopped**\n\n**By** {checking}!")
     else:
         return await message.reply_text(
             "❌ **I dont think if something's playing on voice chat**"
@@ -133,7 +133,7 @@ async def stop(_, message: Message):
 async def skip(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -160,20 +160,21 @@ async def skip(_, message: Message):
                     ),
                 ),
             )
-            await message.reply_text("⏭ **You've skipped to the next song.**")
+            await message.reply_text(f"⏭ **Skipped to the next song.**\n\n**By** {checking}")
 
 
 @app.on_message(filters.command(["cleandb", "oc"]))
 async def stop_cmd(_, message):
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
         return
     chat_id = message.chat.id
+    checking = message.from_user.mention
     try:
         clear(chat_id)
     except QueueEmpty:
@@ -183,4 +184,4 @@ async def stop_cmd(_, message):
         await calls.pytgcalls.leave_group_call(chat_id)
     except:
         pass
-    await message.reply_text("✅ Erased queues, raw files, and downloads in **{message.chat.title}**")
+    await message.reply_text(f"✅ Erased queues, raw files, and downloads in **{message.chat.title}**\n\n**By** {checking}")
