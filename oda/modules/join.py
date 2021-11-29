@@ -16,7 +16,7 @@ from oda.config import SUDO_USERS, ASSUSERNAME
 async def addchannel(client, message):
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -48,8 +48,8 @@ async def addchannel(client, message):
     except Exception as e:
         print(e)
         await message.reply_text(
-            f"<b>Assistant ({user.first_name}) can't join your group due to many join requests for userbot!\nMake sure the user is not banned in the group."
-            "\n\nOr manually add the Assistant bot to your Group and try again.</b>",
+            f"❌ **Assistant ({user.first_name}) can't join your group due to many join requests for userbot!\nMake sure the user is not banned in the group."
+            f"\n\n» Manually add the {user.first_name} to your group.</b>",
         )
         return
 
@@ -58,17 +58,18 @@ async def addchannel(client, message):
 async def rem(USER, message):
     if message.sender_chat:
         return await message.reply_text(
-            "You're an __Anonymous Admin__!\nRevert back to User Account."
+            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
         return
     try:
+        await USER.send_message(message.chat.id, "✅ Assistant successfully left chat")
         await USER.leave_chat(message.chat.id)
     except:
         await message.reply_text(
-            "<b>Assistant cannot leave your group! Probably waiting for floodwaits.\n\nOr manually remove me from your Group</b>"
+            "❌ **Assistant can't leave your group! probably waiting for floodwaits.\n\n» Manually remove me from your group</b>"
         )
 
         return
@@ -79,7 +80,7 @@ async def rem(USER, message):
 async def bye(client, message):
     left = 0
     sleep_time = 0.1
-    lol = await message.reply(f"**Assistant leaving all groups, Processing....**")
+    lol = await message.reply("**Assistant leaving all groups**\n\n`Processing...`")
     async for dialog in USER.iter_dialogs():
         try:
             await USER.leave_chat(dialog.chat.id)
@@ -89,4 +90,4 @@ async def bye(client, message):
             await asyncio.sleep(int(e.x))
         except Exception:
             pass
-    await lol.edit(f"Assistant leaving... Left: {left} chats.")
+    await lol.edit(f"🏃‍♂️ `Assistant leaving...`\n\n» **Left:** {left} chats.")
