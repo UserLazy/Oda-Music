@@ -43,11 +43,11 @@ def song(client, message):
 
     except Exception as e:
         m.edit(
-            "✖️ Found Nothing. Sorry.\n\nTry another keyword or maybe spell it properly."
+            "❌ Found Nothing. Sorry.\n\nTry another keyword or maybe spell it properly."
         )
         print(str(e))
         return
-    m.edit("`Downloading Song... Please wait ⏱`")
+    m.edit("📥 `Downloading Song...`\n\n⏱ `Please wait...`")
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
