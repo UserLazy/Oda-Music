@@ -15,26 +15,27 @@
 
 ### Commands 🛠
 #### For all in group
-- `/play` - reply to youtube url
-- `/play`- reply song file to play song
-- `/play <song name>` - play song you requested
-- `/song <song name>` - download songs you want quickly
-- `/search <query>` - search videos on youtube with details
-- `@botusername <query>` - get youtube url by inline
+- `/play <reply/url>` - Youtube url
+- `/play <reply audio>`- Song file to play song
+- `/play <song name>` - Play song you requested
+- `/song <song name>` - Download songs you want
+- `/search <query>` - Search videos on youtube with details
+- `@botusername <query>` - Get youtube url by inline
 
 #### Admins only
-- `/pause` - pause song play
-- `/resume` - resume song play
-- `/skip` - play next song
-- `/end` - stop music play
-- `/cleandb` - clear all files
-- `/userbotjoin` - add assistant
-- `/userbotleave` - remove assistant
+- `/pause` - Pause song play
+- `/resume` - Resume song play
+- `/skip` - Play next song
+- `/end` - Stop music play
+- `/cleandb` - Clear all files
+- `/userbotjoin` - Add assistant
+- `/userbotleave` - Remove assistant
 
 #### Sudo & Owner only
-- `/restart` - restart bot
-- `/gcast` - broadcast to groups
-- `/exec` - excute a code
+- `/restart` - Restart bot
+- `/gcast <text/reply>` - Broadcast to groups (auto pinned)
+- `/broadcast <text>` - Broadcast to groups (without pinned)
+- `/exec <code>` - Excute a code
 - `/userbotleaveall` - remove assistant of all groups
 
 ### Deploy To Heroku</h4>
