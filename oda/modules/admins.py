@@ -18,7 +18,7 @@ from oda.database.queue import (
 )
 from oda.tgcalls import calls
 from oda.utils.filters import command, other_filters
-from oda.utils.decorators import sudo_users_only, errors
+from oda.utils.decorators import sudo_users_only
 from oda.tgcalls.queues import clear, get, is_empty, put, task_done
 
 
@@ -66,11 +66,11 @@ async def pause(_, message: Message):
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
         return await message.reply_text(
-            "I dont think if something's playing on voice chat"
+            "❌ **I dont think if something's playing on voice chat**"
         )
     elif not await is_music_playing(message.chat.id):
         return await message.reply_text(
-            "I dont think if something's playing on voice chat"
+            "❌ **I dont think if something's playing on voice chat**"
         )
     await music_off(chat_id)
     await calls.pytgcalls.pause_stream(chat_id)
@@ -91,11 +91,11 @@ async def resume(_, message: Message):
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
         return await message.reply_text(
-            "I dont think if something's playing on voice chat"
+            "❌ **I dont think if something's paused on voice chat**"
         )
     elif await is_music_playing(chat_id):
         return await message.reply_text(
-            "I dont think if something's playing on voice chat"
+            "❌ **I dont think if something's paused on voice chat**"
         )
     else:
         await music_on(chat_id)
@@ -125,7 +125,7 @@ async def stop(_, message: Message):
         await message.reply_text(f"🎧 Voicechat End/Stopped by {checking}!")
     else:
         return await message.reply_text(
-            "I dont think if something's playing on voice chat"
+            "❌ **I dont think if something's playing on voice chat**"
         )
 
 
@@ -143,12 +143,12 @@ async def skip(_, message: Message):
     chat_id = message.chat.id
     chat_title = message.chat.title
     if not await is_active_chat(chat_id):
-        await message.reply_text("Nothing's playing on Music")
+        await message.reply_text("❌ **Nothing's playing on voice chat**")
     else:
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
-            await message.reply_text("No more music in Queue \n\nLeaving Voice Chat")
+            await message.reply_text("❌ **No more music in Queue** \n\n**»** `Leaving Voice Chat...`")
             await calls.pytgcalls.leave_group_call(chat_id)
             return
         else:
@@ -183,4 +183,4 @@ async def stop_cmd(_, message):
         await calls.pytgcalls.leave_group_call(chat_id)
     except:
         pass
-    await message.reply_text("Erased Databae, Queues, Logs, Raw Files, Downloads.")
+    await message.reply_text("✅ Erased queues, raw files, and downloads in **{message.chat.title}**")
