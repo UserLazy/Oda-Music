@@ -74,7 +74,7 @@ async def pause(_, message: Message):
         )
     await music_off(chat_id)
     await calls.pytgcalls.pause_stream(chat_id)
-    await message.reply_text(f"🎧 **Voicechat Paused**\n\n**By** {checking}!")
+    await message.reply_text(f"🎧 **Voicechat Paused**\n│\n╰ Music paused by {checking}!")
 
 
 @app.on_message(command(["resume", "or"]) & other_filters)
@@ -100,7 +100,7 @@ async def resume(_, message: Message):
     else:
         await music_on(chat_id)
         await calls.pytgcalls.resume_stream(chat_id)
-        await message.reply_text(f"🎧 **Voicechat Resumed**\n\n**By** {checking}!")
+        await message.reply_text(f"🎧 **Voicechat Resumed**\n│\n╰ Music resumed by {checking}!")
 
 
 @app.on_message(command(["end", "oe"]) & other_filters)
@@ -122,7 +122,7 @@ async def stop(_, message: Message):
             pass
         await remove_active_chat(chat_id)
         await calls.pytgcalls.leave_group_call(chat_id)
-        await message.reply_text(f"🎧 **Voicechat End/Stopped**\n\n**By** {checking}!")
+        await message.reply_text(f"🎧 **Voicechat End/Stopped**\n│\n╰ Music ended by {checking}!")
     else:
         return await message.reply_text(
             "❌ **I dont think if something's playing on voice chat**"
@@ -163,7 +163,7 @@ async def skip(_, message: Message):
                 ),
             )
             await message.reply_text(
-                f"⏭ **Skipped to the next song.**\n\n**By** {checking}"
+                f"⏭ **Skipped to the next song.**\n│\n╰ Music skipped by {checking}"
             )
 
 
@@ -189,5 +189,5 @@ async def stop_cmd(_, message):
     except:
         pass
     await message.reply_text(
-        f"✅ Erased queues, raw files, and downloads in **{message.chat.title}**\n\n**By** {checking}"
+        f"✅ Erased queues in **{message.chat.title}**\n│\n╰ Database cleaned by {checking}"
     )
