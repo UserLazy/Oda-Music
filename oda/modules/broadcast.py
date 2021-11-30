@@ -60,7 +60,7 @@ async def broadcast_message(_, message):
         )
         return
     if len(message.command) < 2:
-        await message.reply_text("**Usage**:\n/gcast <message>")
+        await message.reply_text("**Usage**:\n/gcast [message]")
         return
     text = message.text.split(None, 1)[1]
     sent = 0
@@ -92,7 +92,7 @@ async def broadcast_message(_, message):
 @app.on_message(command("broadcast") & filters.user(SUDO_USERS) & ~filters.edited)
 async def broadcast_message(_, message):
     if len(message.command) < 2:
-        return await message.reply_text("**Usage**:\n/broadcast <message>")
+        return await message.reply_text("**Usage**:\n/broadcast [message]")
     sleep_time = 0.1
     text = message.text.split(None, 1)[1]
     sent = 0
