@@ -18,7 +18,7 @@ from oda.config import SUDO_USERS
 async def addchannel(client, message):
     if message.sender_chat:
         return await message.reply_text(
-            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
+            "🔴 __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -50,8 +50,8 @@ async def addchannel(client, message):
     except Exception as e:
         print(e)
         await message.reply_text(
-            f"❌ **Assistant ({user.first_name}) can't join your group due to many join requests for userbot!\n‼️ Make sure the user is not banned in the group."
-            f"\n\n» Manually add the {user.first_name} to your group.</b>",
+            f"❌ __**Assistant ({user.first_name}) can't join your group due to many join requests for userbot!**__\n‼️ Make sure the user is not banned in the group."
+            f"\n\n» `Manually add the {user.first_name} to your group`",
         )
         return
 
@@ -60,18 +60,18 @@ async def addchannel(client, message):
 async def rem(USER, message):
     if message.sender_chat:
         return await message.reply_text(
-            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
+            "🔴 __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
     if m == 1:
         return
     try:
-        await USER.send_message(message.chat.id, "✅ Assistant successfully left chat")
+        await USER.send_message(message.chat.id, "✅ __Assistant successfully left chat__\n\n Join @UserLazyXBot")
         await USER.leave_chat(message.chat.id)
     except:
         await message.reply_text(
-            "❌ **Assistant can't leave your group! probably waiting for floodwaits.\n\n» Manually remove me from your group</b>"
+            "❌ __**Assistant can't leave your group! probably waiting for floodwaits**__\n\n» Manually remove me from your group</b>"
         )
 
         return
