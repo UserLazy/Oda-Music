@@ -22,4 +22,4 @@ uvloop
 wget
 youtube-search-python
 youtube-search
- yt-dlp
+yt-dlp
