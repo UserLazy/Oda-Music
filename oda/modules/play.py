@@ -480,7 +480,7 @@ async def play(_, message: Message):
 
         except Exception as e:
             await lel.edit(
-                "❌ Song not found.\n\nTry another keyword or /play <yt url>."
+                "❌ Song not found.\n\nTry another keyword or `/play <yt url>`."
             )
             print(str(e))
             return
