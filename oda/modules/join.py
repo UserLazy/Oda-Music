@@ -45,7 +45,7 @@ async def addchannel(client, message):
         await USER.join_chat(link_bokep)
     except UserAlreadyParticipant:
         await message.reply_text(
-            f"🔴 **{user.first_name} Already join this group**",
+            f"🔴 **{user.first_name} already join this group**",
         )
     except Exception as e:
         print(e)
