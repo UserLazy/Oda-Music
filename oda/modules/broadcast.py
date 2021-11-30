@@ -60,7 +60,7 @@ async def broadcast_message(_, message):
         )
         return
     if len(message.command) < 2:
-        await message.reply_text("**Usage**:\n/broadcast [MESSAGE]")
+        await message.reply_text("**Usage**:\n/gcast <message>")
         return
     text = message.text.split(None, 1)[1]
     sent = 0
@@ -81,7 +81,7 @@ async def broadcast_message(_, message):
             sent += 1
         except Exception:
             pass
-    await message.reply_text(f"**Broadcasted Message In {sent} Chats and {pin} Pins.**")
+    await message.reply_text(f"✈️ **Broadcasted message in {sent} chats and {pin} pins.**")
 
 
 # Broadcast without pinned
@@ -108,4 +108,4 @@ async def broadcast_message(_, message):
             await asyncio.sleep(int(e.x))
         except Exception:
             pass
-    await m.edit(f"**Broadcasted Message In {sent} Chats.**")
+    await m.edit(f"✈️ **Broadcasted message in {sent} chats.**")
