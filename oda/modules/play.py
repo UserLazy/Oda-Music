@@ -145,7 +145,7 @@ async def hfmm(_, message):
     global DISABLED_GROUPS
     if message.sender_chat:
         return await message.reply_text(
-            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
+            "🔴 __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
         )
     permission = "can_delete_messages"
     m = await adminsOnly(permission, message)
@@ -164,25 +164,25 @@ async def hfmm(_, message):
         lel = await message.reply("`Processing...`")
         if message.chat.id not in DISABLED_GROUPS:
             await lel.edit(
-                f"🔴 Music player already activate in **{message.chat.title}**"
+                f"🔴 __Music player already activate in **{message.chat.title}**__"
             )
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
-            f"✅ Music player has been turn on successfully in **{message.chat.title}**"
+            f"✅ __Music player has been turn on successfully in **{message.chat.title}**__"
         )
 
     elif status in ["OFF", "off", "Off"]:
-        lel = await message.reply("`Processing...`")
+        lel = await message.reply("__`Processing...`__")
 
         if message.chat.id in DISABLED_GROUPS:
             await lel.edit(
-                f"🔴 Music player already not active in **{message.chat.title}**"
+                f"🔴 __Music player already not active in **{message.chat.title}**__"
             )
             return
         DISABLED_GROUPS.append(message.chat.id)
         await lel.edit(
-            f"✅ Music player has been turn off successfully **{message.chat.title}**"
+            f"✅ __Music player has been turn off successfully **{message.chat.title}**__"
         )
     else:
         await message.reply_text("I only know `/musicplayer on` and `/musicplayer off`")
@@ -216,12 +216,12 @@ async def play(_, message: Message):
     user_id = message.from_user.id
     if message.sender_chat:
         return await message.reply_text(
-            "🔴 You're an **Anonymous Admin**!\nRevert back to user account from admin rights."
+            "🔴 __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
         )
 
     if message.chat.id in DISABLED_GROUPS:
         await message.reply(
-            "🔴 **Music player is turned off, ask the admin to turn on it on!**"
+            "🔴 __**Music player is turned off, ask the admin to turn on it on!**__"
         )
         return
     lel = await message.reply("🔄 **Processing...**")
@@ -312,6 +312,7 @@ async def play(_, message: Message):
             )
 
         file_name = get_file_name(audio)
+        url = f"https://t.me/{UPDATE}"
         title = audio.title
         thumb_name = "https://telegra.ph/file/a7adee6cf365d74734c5d.png"
         thumbnail = thumb_name
@@ -574,8 +575,9 @@ async def play(_, message: Message):
         position = await queues.put(message.chat.id, file=file_path)
         await message.reply_photo(
             photo="final.png",
-            caption="**🎵 Song:** {}\n**🕒 Duration:** {} min\n**👤 Added By:** {}\n\n**#⃣ Queued Position:** {}".format(
+            caption="**🎵 Song:** [{}]({})\n**🕒 Duration:** {} min\n**👤 Added By:** {}\n\n**#⃣ Queued Position:** {}".format(
                 title,
+                url,
                 duration,
                 message.from_user.mention(),
                 position,
@@ -597,8 +599,8 @@ async def play(_, message: Message):
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
-            caption="**🎵 Song:** {}\n**🕒 Duration:** {} min\n**👤 Added By:** {}\n\n**▶️ Now Playing at `{}`...**".format(
-                title, duration, message.from_user.mention(), message.chat.title
+            caption="**🎵 Song:** [{}]({})\n**🕒 Duration:** {} min\n**👤 Added By:** {}\n\n**▶️ Now Playing at `{}`...**".format(
+                title, url, duration, message.from_user.mention(), message.chat.title
             ),
         )
 
