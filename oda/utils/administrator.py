@@ -15,9 +15,10 @@ async def authorised(message):
 
 async def unauthorised(message: Message):
     chatID = message.chat.id
+    checking = message.from_user.mention
     text = (
-        "You don't have the required permission to perform this action."
-        + f"\n❌ __Required permission admin to delete message__"
+        f"Hey {checking} this command only for admin with permission:"
+        + f"\n❌ __Delete Message Chats__"
     )
     try:
         await message.reply_text(text)
