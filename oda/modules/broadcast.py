@@ -81,7 +81,9 @@ async def broadcast_message(_, message):
             sent += 1
         except Exception:
             pass
-    await message.reply_text(f"✈️ **Broadcasted message in {sent} chats and {pin} pins.**")
+    await message.reply_text(
+        f"✈️ **Broadcasted message in {sent} chats and {pin} pins.**"
+    )
 
 
 # Broadcast without pinned
