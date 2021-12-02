@@ -6,9 +6,8 @@ import yt_dlp
 from pyrogram import Client, filters
 from youtube_search import YoutubeSearch
 
-from oda import app
+from oda import app, config
 from oda.utils.filters import command
-from oda.config import BOT_USERNAME
 
 
 def time_to_seconds(time):
@@ -53,7 +52,7 @@ def song(client, message):
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f"🎙 **Title**: [{title[:35]}]({link})\n🎬 **Source**: YouTube\n⏱️ **Duration**: `{duration}`\n👁‍🗨 **Views**: `{views}`\n📤 **By**: @{BOT_USERNAME} "
+        rep = f"🎙 **Title**: [{title[:35]}]({link})\n🎬 **Source**: YouTube\n⏱️ **Duration**: `{duration}`\n👁‍🗨 **Views**: `{views}`\n📤 **By**: @{config.BOT_USERNAME} "
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
