@@ -8,7 +8,6 @@ from oda.utils.decorators import sudo_users_only, errors
 from oda.utils.administrator import adminsOnly
 from oda.utils.filters import command
 from oda.tgcalls import client as USER
-from oda.config import SUDO_USERS
 
 
 @app.on_message(
