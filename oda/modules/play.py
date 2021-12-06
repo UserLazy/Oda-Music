@@ -158,7 +158,6 @@ async def hfmm(_, message):
         await message.reply_text("I only know `/musicplayer on` and `/musicplayer off`")
         return
     status = message.text.split(None, 1)[1]
-    message.chat.id
     if status in ["ON", "on", "On"]:
         lel = await message.reply("`Processing...`")
         if message.chat.id not in DISABLED_GROUPS:
