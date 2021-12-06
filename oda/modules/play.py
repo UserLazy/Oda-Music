@@ -10,10 +10,9 @@ import aiohttp
 import yt_dlp
 
 from os import path
-from typing import Union
+from typing import Callable, Union
 from asyncio import QueueEmpty
 from PIL import Image, ImageFont, ImageDraw
-from typing import Callable
 
 from pytgcalls import StreamType
 from pytgcalls.types.input_stream import InputStream
