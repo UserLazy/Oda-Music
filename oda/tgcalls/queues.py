@@ -47,6 +47,5 @@ def clear(chat_id: int):
     if chat_id in queues:
         if queues[chat_id].empty():
             raise Empty
-        else:
-            queues[chat_id].clear()
+        queues[chat_id].clear()
     raise Empty
