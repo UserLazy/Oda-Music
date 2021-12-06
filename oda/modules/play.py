@@ -142,7 +142,6 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     & ~filters.private
 )
 async def hfmm(_, message):
-    global DISABLED_GROUPS
     if message.sender_chat:
         return await message.reply_text(
             "🔴 __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
@@ -211,8 +210,6 @@ async def closed(_, query: CallbackQuery):
     & ~filters.via_bot
 )
 async def play(_, message: Message):
-    global que
-    global useer
     user_id = message.from_user.id
     if message.sender_chat:
         return await message.reply_text(
