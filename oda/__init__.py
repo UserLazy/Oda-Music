@@ -1,6 +1,8 @@
 import asyncio
 import importlib
+
 from pyrogram import Client
+
 from oda import config
 
 
@@ -24,8 +26,6 @@ client = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 
 
 def all_info(app, client):
-    global BOT_ID, BOT_NAME, BOT_USERNAME
-    global ASSID, ASSNAME, ASSUSERNAME
     getme = app.get_me()
     getme1 = client.get_me()
     BOT_ID = getme.id
