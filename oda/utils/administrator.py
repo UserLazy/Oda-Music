@@ -18,7 +18,7 @@ async def unauthorised(message: Message):
     checking = message.from_user.mention
     text = (
         f"Hey {checking} this command only for admin with permission:"
-        + f"\n❌ __Delete Message Chats__"
+        + "\n❌ __Delete Message Chats__"
     )
     try:
         await message.reply_text(text)
