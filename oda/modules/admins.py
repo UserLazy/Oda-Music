@@ -68,7 +68,7 @@ async def pause(_, message: Message):
         return await message.reply_text(
             "❌ __**I dont think if something's playing on voice chat**__"
         )
-    elif not await is_music_playing(message.chat.id):
+    if not await is_music_playing(message.chat.id):
         return await message.reply_text(
             "❌ __**I dont think if something's playing on voice chat**__"
         )
@@ -95,16 +95,15 @@ async def resume(_, message: Message):
         return await message.reply_text(
             "❌ __**I dont think if something's paused on voice chat**__"
         )
-    elif await is_music_playing(chat_id):
+    if await is_music_playing(chat_id):
         return await message.reply_text(
             "❌ __**I dont think if something's paused on voice chat**__"
         )
-    else:
-        await music_on(chat_id)
-        await calls.pytgcalls.resume_stream(chat_id)
-        await message.reply_text(
-            f"🎧 __**Voicechat Resumed**__\n│\n╰ Music resumed by {checking}!"
-        )
+    await music_on(chat_id)
+    await calls.pytgcalls.resume_stream(chat_id)
+    await message.reply_text(
+        f"🎧 __**Voicechat Resumed**__\n│\n╰ Music resumed by {checking}!"
+    )
 
 
 @app.on_message(command(["end", "oe"]) & other_filters)
@@ -159,18 +158,17 @@ async def skip(_, message: Message):
             )
             await calls.pytgcalls.leave_group_call(chat_id)
             return
-        else:
-            await calls.pytgcalls.change_stream(
-                chat_id,
-                InputStream(
-                    InputAudioStream(
-                        get(chat_id)["file"],
-                    ),
+        await calls.pytgcalls.change_stream(
+            chat_id,
+            InputStream(
+                InputAudioStream(
+                    get(chat_id)["file"],
                 ),
-            )
-            await message.reply_text(
-                f"⏭ __**Skipped to the next song.**__\n│\n╰ Music skipped by {checking}"
-            )
+            ),
+        )
+        await message.reply_text(
+            f"⏭ __**Skipped to the next song.**__\n│\n╰ Music skipped by {checking}"
+        )
 
 
 @app.on_message(filters.command(["cleandb", "oc"]))
