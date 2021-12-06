@@ -38,7 +38,6 @@ async def load_start():
             await remove_active_chat(served_chat)
         except Exception as e:
             print("Error came while clearing db")
-            pass
     print("[INFO]: STARTED")
 
 
