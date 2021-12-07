@@ -204,7 +204,7 @@ async def closed(_, query: CallbackQuery):
 
 # play
 @Client.on_message(
-    command(["play", f"play@{BOT_USERNAME}", "p"])
+    command(["play", f"play@{BOT_USERNAME}"])
     & filters.group
     & ~filters.edited
     & ~filters.forwarded
