@@ -1,9 +1,15 @@
+import os
+import asyncio
+
 from pyrogram import Client
 from pyrogram.types import Message
 
 from oda import app, db_mem
 from oda.config import get_queue
 from oda.utils.filters import command
+
+
+loop = asyncio.get_event_loop()
 
 
 @app.on_message(command("queue"))
