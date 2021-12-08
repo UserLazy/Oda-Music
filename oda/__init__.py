@@ -43,6 +43,12 @@ def all_info(app, client):
     ASSUSERNAME = getme1.username
 
 
+def init_db():
+    global db_mem
+    db_mem = {}
+
+
+init_db()
 app.start()
 client.start()
 all_info(app, client)
