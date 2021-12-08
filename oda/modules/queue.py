@@ -6,6 +6,7 @@ from pyrogram.types import Message
 
 from oda import app, db_mem
 from oda.config import get_queue
+from oda.database.queue import is_active_chat
 from oda.utils.filters import command
 
 
