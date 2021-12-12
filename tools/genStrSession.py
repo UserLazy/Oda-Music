@@ -6,6 +6,7 @@ from pyrogram.errors import UserIsBot
 
 from oda.config import API_ID, API_HASH
 
+
 async def genStrSession() -> None:
     async with Client(
         "Music",
@@ -16,7 +17,8 @@ async def genStrSession() -> None:
         doneStr = "sent to saved messages!"
         try:
             await music.send_message(
-                "me", f"#ODA #PYROGRAM_STRING_SESSION\n\n```{await music.export_session_string()}```"
+                "me",
+                f"#ODA #PYROGRAM_STRING_SESSION\n\n```{await music.export_session_string()}```",
             )
         except UserIsBot:
             doneStr = "successfully printed!"
