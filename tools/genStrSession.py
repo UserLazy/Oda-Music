@@ -4,13 +4,13 @@ import asyncio
 from pyrogram import Client
 from pyrogram.errors import UserIsBot
 
-from oda import config
+from oda.config import API_ID, API_HASH
 
 async def genStrSession() -> None:
     async with Client(
         "Music",
-        config.API_ID or input("Enter Telegram APP ID: ")),
-        config.API_HASH or input("Enter Telegram API HASH: "),
+        API_ID or input("Enter Telegram APP ID: "),
+        API_HASH or input("Enter Telegram API HASH: "),
     ) as music:
         print("\nprocessing...")
         doneStr = "sent to saved messages!"
