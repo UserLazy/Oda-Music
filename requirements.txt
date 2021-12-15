@@ -6,7 +6,7 @@ dnspython
 ffmpeg-python
 future
 gitpython
-git+https://github.com/pyrogram/pyrogram@master
+pyrogram
 hurry.filesize
 heroku3
 motor
