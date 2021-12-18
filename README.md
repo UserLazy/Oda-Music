@@ -45,9 +45,11 @@
 + Recomended use Europe server for deploy on Heroku
 
 ### Get String Session</h5>
-[![GenerateString](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](http://replit.com/@UserLazy/UserLazyString)
+[![Repl String](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](http://replit.com/@UserLazy/UserLazyString)
 
-**NOTE**: Select P for pyrogram string
+[![Bot String](https://img.shields.io/badge/%F0%9F%A4%96%20-String Bot-blue)](http://t.me/GetStringXbot)
+
+**NOTE**: Select P (Pyrogram) for pyrogram string
 
 ### Credits
 - [UserLazy](https://github.com/UserLazy): Dev
