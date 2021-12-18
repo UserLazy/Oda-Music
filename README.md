@@ -52,4 +52,6 @@
 ### Credits
 - [UserLazy](https://github.com/UserLazy): Dev
 - [Laky](https://github.com/Laky-64) & [Andrew](https://github.com/AndrewLaneX): PyTgCalls
+- [CallMusic](https://github.com/Callsmusic): CallMusic
+- [WilliamButcherBot](https://github.com/TheHamkerCat/WilliamButcherBot): Broadcast 
 - [Oda Nobunaga](https://t.me/OdaRobot): Bot
