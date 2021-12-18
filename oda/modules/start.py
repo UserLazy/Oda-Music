@@ -44,11 +44,11 @@ keyboard = InlineKeyboardMarkup(
 @app.on_message(command(["start"]) & filters.private & ~filters.edited)
 async def start(_, message):
     await message.reply(
-            home_text_pm,
-            reply_markup=home_keyboard_pm,
-        )
+        home_text_pm,
+        reply_markup=home_keyboard_pm,
+    )
 
-    
+
 @app.on_message(command("help") & filters.private & ~filters.edited)
 async def help(client: Client, message: Message):
     await message.reply_text(
@@ -68,13 +68,9 @@ async def help(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Support 👨", url=f"https://t.me/{SUPPORT}"
-                    ),
-                    InlineKeyboardButton(
-                        "Updates", url=f"https://t.me/{UPDATE}"
-                    )
+                    InlineKeyboardButton("Support 👨", url=f"https://t.me/{SUPPORT}"),
+                    InlineKeyboardButton("Updates", url=f"https://t.me/{UPDATE}"),
                 ]
             ]
-        )
+        ),
     )
