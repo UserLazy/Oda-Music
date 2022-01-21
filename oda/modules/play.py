@@ -585,17 +585,23 @@ async def play(_, message: Message):
             reply_markup=keyboard,
         )
     else:
-        await music_on(message.chat.id)
-        await add_active_chat(message.chat.id)
-        await calls.pytgcalls.join_group_call(
-            message.chat.id,
-            InputStream(
-                InputAudioStream(
-                    file_path,
+        try:
+            await music_on(message.chat.id)
+            await add_active_chat(message.chat.id)
+            await calls.pytgcalls.join_group_call(
+                message.chat.id,
+                InputStream(
+                    InputAudioStream(
+                        file_path,
+                    ),
                 ),
-            ),
-            stream_type=StreamType().local_stream,
-        )
+                stream_type=StreamType().local_stream,
+            )
+        except Exception as e:
+            return await lel.edit(
+                "Error Joining Voice Chat. Make sure Voice Chat is Enabled."
+            )
+
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
