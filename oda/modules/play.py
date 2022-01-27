@@ -586,8 +586,6 @@ async def play(_, message: Message):
         )
     else:
         try:
-            await music_on(message.chat.id)
-            await add_active_chat(message.chat.id)
             await calls.pytgcalls.join_group_call(
                 message.chat.id,
                 InputStream(
@@ -602,6 +600,8 @@ async def play(_, message: Message):
                 "Error Joining Voice Chat. Make sure Voice Chat is Enabled."
             )
 
+        await music_on(message.chat.id)
+        await add_active_chat(message.chat.id)
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
