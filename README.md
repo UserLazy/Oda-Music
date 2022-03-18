@@ -47,8 +47,6 @@
 ### Get String Session</h5>
 [![Repl String](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](http://replit.com/@UserLazy/UserLazyString)
 
-[![Bot String](https://img.shields.io/badge/%F0%9F%A4%96%20-StringBot-blue)](http://t.me/GetStringXbot)
-
 **NOTE**: Select P (Pyrogram) for pyrogram string
 
 ### Credits
