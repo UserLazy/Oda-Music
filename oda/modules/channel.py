@@ -167,13 +167,13 @@ async def play(_, message: Message):
         )
 
     try:
-      conchat = await app.get_chat(message.chat.id)
-      conv = conchat.linked_chat
-      conid = conchat.linked_chat.id
-      chid = conid
+        conchat = await app.get_chat(message.chat.id)
+        conv = conchat.linked_chat
+        conid = conchat.linked_chat.id
+        chid = conid
     except:
-      await message.reply("Is chat even linked")
-      return
+        await message.reply("Is chat even linked")
+        return
 
     lel = await message.reply("🔄 **Processing...**")
 
@@ -555,7 +555,11 @@ async def play(_, message: Message):
             photo="final.png",
             reply_markup=keyboard,
             caption="**🎵 Song:** [{}]({})\n**🕒 Duration:** {} min\n**👤 Added By:** {}\n\n**▶️ Now Playing at `{}`...**".format(
-                title, url, duration, message.from_user.mention(), conchat.linked_chat.title
+                title,
+                url,
+                duration,
+                message.from_user.mention(),
+                conchat.linked_chat.title,
             ),
         )
 
