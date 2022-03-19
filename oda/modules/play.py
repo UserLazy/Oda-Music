@@ -71,7 +71,6 @@ from tools.channelmusic import get_chat_id
 # plus
 chat_id = None
 DISABLED_GROUPS = []
-ACTV_CALLS = []
 useer = "NaN"
 flex = {}
 
@@ -218,8 +217,7 @@ async def play(_, message: Message):
     chat_id = get_chat_id(message.chat)
     bttn = InlineKeyboardMarkup(
         [
-            [InlineKeyboardButton("Command Syntax", callback_data="cmdsyntax")],
-            [InlineKeyboardButton("🗑 Close", callback_data="close")],
+            [InlineKeyboardButton("🗑 Close", callback_data="close")]
         ]
     )
 
@@ -232,6 +230,37 @@ async def play(_, message: Message):
     lel = await message.reply("🔎 **Processing...**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
+
+    c = await app.get_chat_member(message.chat.id, BOT_ID)
+    if c.status != "administrator":
+        await lel.edit(
+            f"I need to be admin with some permissions:\n\n❌ **can_manage_voice_chats:** To manage voice chats\n❌ **can_delete_messages:** To delete music's searched waste\n❌ **can_invite_users**: For inviting assistant to chat\n❌ **can_restrict_members**: For protecting music from spammers."
+        )
+        return
+    if not c.can_manage_voice_chats:
+        await lel.edit(
+            "I don't have the required permission to perform this action."
+            + "\n❌ **Permission:** Manage Voice Chats"
+        )
+        return
+    if not c.can_delete_messages:
+        await lel.edit(
+            "I don't have the required permission to perform this action."
+            + "\n❌ **Permission:** Delete Message"
+        )
+        return
+    if not c.can_invite_users:
+        await lel.edit(
+            "I don't have the required permission to perform this action."
+            + "\n❌ **Permission:** Invite User Via Invitelink"
+        )
+        return
+    if not c.can_restrict_members:
+        await lel.edit(
+            "I don't have the required permission to perform this action."
+            + "\n❌ **Permission:** Ban User"
+        )
+        return
     try:
         user = await ASS_ACC.get_me()
     except:
@@ -267,7 +296,7 @@ async def play(_, message: Message):
                     pass
                 except Exception as e:
                     return await message.reply_text(
-                        f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
+                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
                     )
     try:
         await ASS_ACC.get_chat(chid)
@@ -276,22 +305,6 @@ async def play(_, message: Message):
             f"» **Userbot not in this chat or is banned in this group !**\n\n**unban @{ASSISTANT_NAME} and added again to this group manually, or type /reload then try again."
         )
         return
-    text_links = None
-    if message.reply_to_message:
-        if message.reply_to_message.audio or message.reply_to_message.voice:
-            pass
-        entities = {}
-        toxt = message.reply_to_message.text or message.reply_to_message.caption
-        if message.reply_to_message.entities:
-            entities = message.reply_to_message.entities + entities
-        elif message.reply_to_message.caption_entities:
-            entities = message.reply_to_message.entities + entities
-        urls = [entity for entity in entities if entity.type == "url"]
-        text_links = [entity for entity in entities if entity.type == "text_link"]
-    else:
-        urls = None
-    if text_links:
-        urls = True
     user_id = message.from_user.id
     user_name = message.from_user.first_name
     rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
@@ -303,6 +316,7 @@ async def play(_, message: Message):
         if message.reply_to_message
         else None
     )
+    url = get_url(message)
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
             raise DurationLimitError(
@@ -330,41 +344,50 @@ async def play(_, message: Message):
             if not path.isfile(path.join("downloads", file_name))
             else file_name
         )
-    elif urls:
-        query = toxt
-        await lel.edit("🔎 **Processing...**")
-        ydl_opts = {"format": "bestaudio/best"}
+    elif url:
         try:
-            results = YoutubeSearch(query, max_results=1).to_dict()
-            url = f"https://youtube.com{results[0]['url_suffix']}"
-            title = results[0]["title"][:70]
-            thumbnail = "https://telegra.ph/file/4c39fbb88932761913fff.png"
-            thumb_name = f"{title}.jpg"
-            ctitle = message.chat.title
-            ctitle = await CHAT_TITLE(ctitle)
+            results = YoutubeSearch(url, max_results=1).to_dict()
+            # print results
+            title = results[0]["title"]
+            thumbnail = results[0]["thumbnails"][0]
+            thumb_name = f"thumb{title}.jpg"
             thumb = requests.get(thumbnail, allow_redirects=True)
             open(thumb_name, "wb").write(thumb.content)
             duration = results[0]["duration"]
-            views = results[0]["views"]
             url_suffix = results[0]["url_suffix"]
-        except Exception as e:
-            await lel.delete()
-            await message.reply_photo(
-                photo="https://telegra.ph/file/66518ed54301654f0b126.png",
-                caption=nofound,
-                reply_markup=bttn,
-            )
-            print(str(e))
-            return
-        keyboard = InlineKeyboardMarkup(
-            [
+            views = results[0]["views"]
+            durl = url
+            durl = durl.replace("youtube", "youtubepp")
+
+            secmul, dur, dur_arr = 1, 0, duration.split(":")
+            for i in range(len(dur_arr) - 1, -1, -1):
+                dur += int(dur_arr[i]) * secmul
+                secmul *= 60
+
+            keyboard = InlineKeyboardMarkup(
                 [
-                    InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
-                    InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
-                ],
-                [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
-            ]
-        )
+                    [
+                        InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
+                        InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
+                    ],
+                    [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
+                ]
+            )
+
+        except Exception as e:
+            title = "NaN"
+            thumb_name = "https://telegra.ph/file/a7adee6cf365d74734c5d.png"
+            duration = "NaN"
+            views = "NaN"
+            keyboard = InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text="YouTube 🎬", url="https://youtube.com")]]
+            )
+
+        if (dur / 60) > DURATION_LIMIT:
+            await lel.edit(
+                f"❌ Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
+            )
+            return
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
 
@@ -435,17 +458,24 @@ async def play(_, message: Message):
         x = await loop.run_in_executor(None, youtube.download, url, my_hook)
         file_path = await oda.tgcalls.convert(x)
     else:
+        if len(message.command) < 2:
+            return await lel.edit(
+                "🧐 **Song not found! Try searching with the correct title\nExample » /play In The End\n\nChannel : @UserLazyXBot**"
+            )
+        await lel.edit("🔎 **Finding the song...**")
+        query = message.text.split(None, 1)[1]
+        # print(query)
+        await lel.edit("🎵 **Processing sounds...**")
         query = ""
         for i in message.command[1:]:
             query += " " + str(i)
         print(query)
         ydl_opts = {"format": "bestaudio/best"}
-
         try:
             results = YoutubeSearch(query, max_results=5).to_dict()
         except:
-            await lel.edit(
-                "😕 **Song name not detected**\n\n» **please provide the name of the song you want to play**"
+            return await lel.edit(
+                "❌ Song not found.\n\nTry another keyword or `/play [yt url]`."
             )
         try:
             toxxt = "\n"
@@ -486,13 +516,8 @@ async def play(_, message: Message):
                 caption=toxxt,
                 reply_markup=keyboard,
             )
-            await lel.delete()
-
-            return
-
+            return await lel.delete()  
         except:
-            pass
-
             try:
                 url = f"https://youtube.com{results[0]['url_suffix']}"
                 title = results[0]["title"][:70]
@@ -503,7 +528,8 @@ async def play(_, message: Message):
                 thumb = requests.get(thumbnail, allow_redirects=True)
                 open(thumb_name, "wb").write(thumb.content)
                 duration = results[0]["duration"]
-                results[0]["url_suffix"]
+                url_suffix = results[0]["url_suffix"]
+                views = results[x]["views"]
             except Exception as e:
                 await lel.delete()
                 await message.reply_photo(
@@ -522,13 +548,77 @@ async def play(_, message: Message):
                     [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
                 ]
             )
-            message.from_user.first_name
-            await generate_cover(title, thumbnail, ctitle)
-            file_path = await oda.tgcalls.convert(youtube.download(url))
-    for x in calls.pytgcalls.active_calls:
-        ACTV_CALLS.append(int(x.chat_id))
-    if int(chat_id) in ACTV_CALLS:
-        position = await queues.put(chat_id, file_path)
+            requested_by = message.from_user.first_name
+            await generate_cover(requested_by, title, views, duration, thumbnail)
+            def my_hook(d):
+                if d["status"] == "downloading":
+                    percentage = d["_percent_str"]
+                    per = (str(percentage)).replace(".", "", 1).replace("%", "", 1)
+                    per = int(per)
+                    eta = d["eta"]
+                    speed = d["_speed_str"]
+                    size = d["_total_bytes_str"]
+                    bytesx = d["total_bytes"]
+                    if str(bytesx) in flex:
+                        pass
+                    else:
+                        flex[str(bytesx)] = 1
+                    if flex[str(bytesx)] == 1:
+                        flex[str(bytesx)] += 1
+                        try:
+                            if eta > 2:
+                                lel.edit(
+                                    f"Downloading {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                                )
+                        except Exception as e:
+                            pass
+                    if per > 250:
+                        if flex[str(bytesx)] == 2:
+                            flex[str(bytesx)] += 1
+                            if eta > 2:
+                                lel.edit(
+                                    f"**Downloading** {title[:50]}..\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                                )
+                            print(
+                                f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
+                            )
+                    if per > 500:
+                        if flex[str(bytesx)] == 3:
+                            flex[str(bytesx)] += 1
+                            if eta > 2:
+                                lel.edit(
+                                    f"**Downloading** {title[:50]}...\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                                )
+                            print(
+                                f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
+                            )
+                    if per > 800:
+                        if flex[str(bytesx)] == 4:
+                            flex[str(bytesx)] += 1
+                            if eta > 2:
+                                lel.edit(
+                                    f"**Downloading** {title[:50]}....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                                )
+                            print(
+                                f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
+                            )
+                if d["status"] == "finished":
+                    try:
+                        taken = d["_elapsed_str"]
+                    except Exception as e:
+                        taken = "00:00"
+                    size = d["_total_bytes_str"]
+                    lel.edit(
+                        f"**Downloaded** {title[:50]}.....\n\n**FileSize:** {size}\n**Time Taken:** {taken} sec\n\n**Converting File**[__FFmpeg processing__]"
+                    )
+                    print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
+
+            loop = asyncio.get_event_loop()
+            x = await loop.run_in_executor(None, youtube.download, url, my_hook)
+            file_path = await oda.tgcalls.convert(x)
+    chat_id = get_chat_id(message.chat)
+    if await is_active_chat(chat_id):
+        position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
         r_by = message.from_user
@@ -538,11 +628,10 @@ async def play(_, message: Message):
         await lel.delete()
         await message.reply_photo(
             photo="final.png",
-            caption=f"💡 **Track added to queue »** `{position}`\n\n**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {message.from_user.mention}",
+            caption=f"**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**#⃣ Queued Position:** {position}",
             reply_markup=keyboard,
         )
     else:
-        chat_id = get_chat_id(message.chat)
         que[chat_id] = []
         qeue = que.get(chat_id)
         s_name = title
@@ -552,7 +641,7 @@ async def play(_, message: Message):
         qeue.append(appendable)
         try:
             await calls.pytgcalls.join_group_call(
-                chat_id,
+                chat_id, 
                 InputStream(
                     InputAudioStream(
                         file_path,
@@ -565,10 +654,12 @@ async def play(_, message: Message):
                 "😕 **Voice chat not found**\n\n» please turn on the voice chat first"
             )
             return
+        await music_on(chat_id)
+        await add_active_chat(chat_id)
         await lel.delete()
         await message.reply_photo(
             photo="final.png",
-            caption=f"**🎵 Song:** [{title[:70]}]({url})\n**🕒 Duration:** `{duration}`\n**👤 Added By:** {message.from_user.mention}\n\n**▶️ Now Playing at `{message.chat.title}`...**\n",
+            caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**▶️ Now Playing at `{message.chat.title}`...**",
             reply_markup=keyboard,
         )
         os.remove("final.png")
@@ -576,16 +667,15 @@ async def play(_, message: Message):
 
 @Client.on_callback_query(filters.regex(pattern=r"plll"))
 async def lol_cb(b, cb):
-
+    
     bttn = InlineKeyboardMarkup(
         [
-            [InlineKeyboardButton("Command Syntax", callback_data="cmdsyntax")],
-            [InlineKeyboardButton("🗑 Close", callback_data="close")],
+            [InlineKeyboardButton("🗑 Close", callback_data="close")]
         ]
     )
-
+    
     nofound = "😕 **Couldn't find song you requested**\n\n» **please provide the correct song name or include the artist's name as well**"
-
+    
     global que
     cbd = cb.data.strip()
     chat_id = cb.message.chat.id
@@ -642,16 +732,15 @@ async def lol_cb(b, cb):
         f"Downloading {title[:50]}\n\n**FileSize:** NaN\n**Downloaded:** NaN\n**Speed:** NaN\n**ETA:** NaN sec"
     )
     keyboard = InlineKeyboardMarkup(
-        [
             [
-                InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
-                InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
-            ],
-            [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
-        ]
-    )
+                [
+                    InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
+                    InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
+                ],
+                [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
+            ]
+        )
     await generate_cover(requested_by, title, views, duration, thumbnail)
-
     def my_hook(d):
         if d["status"] == "downloading":
             percentage = d["_percent_str"]
@@ -730,7 +819,7 @@ async def lol_cb(b, cb):
         await b.send_photo(
             chat_id,
             photo="final.png",
-            caption=f"**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {cb.from_user.mention}\n\n**#⃣ Queued Position:** {position}",
+            caption=f"**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**#⃣ Queued Position:** {position}",
             reply_markup=keyboard,
         )
     else:
@@ -753,8 +842,8 @@ async def lol_cb(b, cb):
             )
         except Exception:
             return await lel.edit(
-                "Error Joining Voice Chat. Make sure Voice Chat is Enabled."
-            )
+            "Error Joining Voice Chat. Make sure Voice Chat is Enabled."
+        )
 
         await music_on(chat_id)
         await add_active_chat(chat_id)
@@ -762,8 +851,8 @@ async def lol_cb(b, cb):
         await b.send_photo(
             chat_id,
             photo="final.png",
-            caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {cb.from_user.mention}\n\n**▶️ Now Playing at `{cb.message.chat.title}`...**",
-            reply_markup=keyboard,
+            caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**▶️ Now Playing at `{cb.message.chat.title}`...**",
+            reply_markup=keyboard
         )
 
     os.remove("final.png")
