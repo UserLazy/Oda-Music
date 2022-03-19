@@ -620,7 +620,7 @@ async def play(_, message: Message):
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
+        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -634,7 +634,7 @@ async def play(_, message: Message):
         que[chat_id] = []
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
+        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -695,7 +695,7 @@ async def lol_cb(b, cb):
     try:
         requested_by = cb.message.reply_to_message.from_user.first_name
     except:
-        requested_by = cb.message.from_user.first_name
+        requested_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
     results = YoutubeSearch(query, max_results=5).to_dict()
     resultss = results[x]["url_suffix"]
     title = results[x]["title"][:70]
@@ -809,7 +809,7 @@ async def lol_cb(b, cb):
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
+        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -824,7 +824,7 @@ async def lol_cb(b, cb):
         que[chat_id] = []
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
+        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
