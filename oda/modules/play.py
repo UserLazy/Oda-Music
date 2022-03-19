@@ -226,7 +226,6 @@ async def play(_, message: Message):
     if message.chat.id in DISABLED_GROUPS:
         return
     lel = await message.reply("🔎 **Processing...**")
-    administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
     c = await app.get_chat_member(message.chat.id, BOT_ID)
