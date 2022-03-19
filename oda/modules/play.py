@@ -260,47 +260,48 @@ async def play(_, message: Message):
         )
         return
     try:
-        user = await ASS_ACC.get_me()
-    except:
-        user.first_name = "Music Assistant"
-    usar = user
-    wew = usar.id
+        b = await app.get_chat_member(message.chat.id, ASSID)
+        if b.status == "kicked":
+            await message.reply_text(
+                f"🔴 {ASSNAME} (@{ASSUSERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use music"
+            )
+            return
+    except UserNotParticipant:
+        if message.chat.username:
+            try:
+                await ASS_ACC.join_chat(f"{message.chat.username}")
+                await message.reply(
+                    f"✅ **{ASSNAME} joined successfully**",
+                )
+                await remove_active_chat(chat_id)
+            except Exception as e:
+                await message.reply_text(
+                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
+                )
+                return
+        else:
+            try:
+                invite_link = await message.chat.export_invite_link()
+                if "+" in invite_link:
+                    kontol = (invite_link.replace("+", "")).split("t.me/")[1]
+                    link_bokep = f"https://t.me/joinchat/{kontol}"
+                await ASS_ACC.join_chat(link_bokep)
+                await message.reply(
+                    f"✅ **{ASSNAME} joined successfully**",
+                )
+                await remove_active_chat(message.chat.id)
+            except UserAlreadyParticipant:
+                pass
+            except Exception as e:
+                return await message.reply_text(
+                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
+                )
+
     try:
-        await _.get_chat_member(chid, wew)
-    except:
-        for administrator in administrators:
-            if administrator == message.from_user.id:
-                if message.chat.title.startswith("Channel Music: "):
-                    await lel.edit(
-                        f"💡 **Please add the userbot to your channel first.**",
-                    )
-                try:
-                    invitelink = await _.export_chat_invite_link(chid)
-                    if invitelink.startswith("https://t.me/+"):
-                        invitelink = invitelink.replace(
-                            "https://t.me/+", "https://t.me/joinchat/"
-                        )
-                except:
-                    await lel.edit(
-                        "💡 **To use me, I need to be an Administrator** with the permissions:\n\n» ❌ __Delete messages__\n» ❌ __Ban users__\n» ❌ __Add users__\n» ❌ __Manage voice chat__\n\n**Then type /reload**",
-                    )
-                    return
-                try:
-                    await ASS_ACC.join_chat(invitelink)
-                    await lel.edit(
-                        f"✅ **Userbot succesfully entered chat**",
-                    )
-                except UserAlreadyParticipant:
-                    pass
-                except Exception as e:
-                    return await message.reply_text(
-                        f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
-                    )
-    try:
-        await ASS_ACC.get_chat(chid)
+        await app.get_chat_member(message.chat.id, ASSID)
     except:
         await lel.edit(
-            f"» **Userbot not in this chat or is banned in this group !**\n\n**unban @{ASSISTANT_NAME} and added again to this group manually, or type /reload then try again."
+            f"🔴 {ASSNAME} (@{ASSUSERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use music"
         )
         return
     user_id = message.from_user.id
