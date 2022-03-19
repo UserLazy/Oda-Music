@@ -88,7 +88,7 @@ def convert_seconds(seconds):
     seconds %= 3600
     minutes = seconds // 60
     seconds %= 60
-    return "%02d:%02d" % (minutes, seconds)
+    return "%d:%02d" % (minutes, seconds)
 
 
 # Convert hh:mm:ss to seconds
@@ -333,7 +333,7 @@ async def play(_, message: Message):
         title = file_name
         thumb_name = "https://telegra.ph/file/4c39fbb88932761913fff.png"
         thumbnail = thumb_name
-        duration = round(audio.duration / 60)
+        duration = convert_seconds(audio.duration)
         requested_by = message.from_user.first_name
         views = "Locally added"
         await generate_cover(requested_by, title, views, duration, thumbnail)
@@ -620,7 +620,7 @@ async def play(_, message: Message):
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
+        r_by = message.from_user.mention
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -634,7 +634,7 @@ async def play(_, message: Message):
         que[chat_id] = []
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
+        r_by = message.from_user.mention
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -809,7 +809,7 @@ async def lol_cb(b, cb):
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
+        r_by = cb.from_user.mention
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -824,7 +824,7 @@ async def lol_cb(b, cb):
         que[chat_id] = []
         qeue = que.get(chat_id)
         s_name = title
-        r_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
+        r_by = cb.from_user.mention
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
