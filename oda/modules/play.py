@@ -620,21 +620,21 @@ async def play(_, message: Message):
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
-        r_by = message.from_user
+        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         await lel.delete()
         await message.reply_photo(
             photo="final.png",
-            caption=f"**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**#⃣ Queued Position:** {position}",
+            caption=f"**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by}\n\n**#⃣ Queued Position:** {position}",
             reply_markup=keyboard,
         )
     else:
         que[chat_id] = []
         qeue = que.get(chat_id)
         s_name = title
-        r_by = message.from_user
+        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -658,7 +658,7 @@ async def play(_, message: Message):
         await lel.delete()
         await message.reply_photo(
             photo="final.png",
-            caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**▶️ Now Playing at `{message.chat.title}`...**",
+            caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by}\n\n**▶️ Now Playing at `{message.chat.title}`...**",
             reply_markup=keyboard,
         )
         os.remove("final.png")
@@ -809,7 +809,7 @@ async def lol_cb(b, cb):
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
-        r_by = cb.message.from_user
+        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -817,14 +817,14 @@ async def lol_cb(b, cb):
         await b.send_photo(
             chat_id,
             photo="final.png",
-            caption=f"**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**#⃣ Queued Position:** {position}",
+            caption=f"**🎵 Song:** [{title[:35]}...]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by}\n\n**#⃣ Queued Position:** {position}",
             reply_markup=keyboard,
         )
     else:
         que[chat_id] = []
         qeue = que.get(chat_id)
         s_name = title
-        r_by = cb.message.from_user
+        r_by = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
@@ -849,7 +849,7 @@ async def lol_cb(b, cb):
         await b.send_photo(
             chat_id,
             photo="final.png",
-            caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by.mention}\n\n**▶️ Now Playing at `{cb.message.chat.title}`...**",
+            caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {r_by}\n\n**▶️ Now Playing at `{cb.message.chat.title}`...**",
             reply_markup=keyboard,
         )
 
