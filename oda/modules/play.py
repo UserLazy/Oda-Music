@@ -218,16 +218,13 @@ async def play(_, message: Message):
     chat_id = get_chat_id(message.chat)
     bttn = InlineKeyboardMarkup(
         [
-            [
-                InlineKeyboardButton("Command Syntax", callback_data="cmdsyntax")
-            ],[
-                InlineKeyboardButton("🗑 Close", callback_data="close")
-            ]
+            [InlineKeyboardButton("Command Syntax", callback_data="cmdsyntax")],
+            [InlineKeyboardButton("🗑 Close", callback_data="close")],
         ]
     )
-    
+
     nofound = "😕 **Couldn't find song you requested**\n\n» **Please provide the correct song name or include the artist's name as well**"
-    
+
     global que
     global useer
     if message.chat.id in DISABLED_GROUPS:
@@ -253,7 +250,9 @@ async def play(_, message: Message):
                 try:
                     invitelink = await _.export_chat_invite_link(chid)
                     if invitelink.startswith("https://t.me/+"):
-                        invitelink = invitelink.replace("https://t.me/+","https://t.me/joinchat/")
+                        invitelink = invitelink.replace(
+                            "https://t.me/+", "https://t.me/joinchat/"
+                        )
                 except:
                     await lel.edit(
                         "💡 **To use me, I need to be an Administrator** with the permissions:\n\n» ❌ __Delete messages__\n» ❌ __Ban users__\n» ❌ __Add users__\n» ❌ __Manage voice chat__\n\n**Then type /reload**",
@@ -268,7 +267,7 @@ async def play(_, message: Message):
                     pass
                 except Exception as e:
                     return await message.reply_text(
-                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
+                        f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
                     )
     try:
         await ASS_ACC.get_chat(chid)
@@ -287,12 +286,8 @@ async def play(_, message: Message):
             entities = message.reply_to_message.entities + entities
         elif message.reply_to_message.caption_entities:
             entities = message.reply_to_message.entities + entities
-        urls = [
-            entity for entity in entities if entity.type == "url"
-        ]
-        text_links = [
-            entity for entity in entities if entity.type == "text_link"
-        ]
+        urls = [entity for entity in entities if entity.type == "url"]
+        text_links = [entity for entity in entities if entity.type == "text_link"]
     else:
         urls = None
     if text_links:
@@ -372,6 +367,7 @@ async def play(_, message: Message):
         )
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
+
         def my_hook(d):
             if d["status"] == "downloading":
                 percentage = d["_percent_str"]
@@ -491,9 +487,9 @@ async def play(_, message: Message):
                 reply_markup=keyboard,
             )
             await lel.delete()
-            
+
             return
-        
+
         except:
             pass
 
@@ -556,7 +552,7 @@ async def play(_, message: Message):
         qeue.append(appendable)
         try:
             await calls.pytgcalls.join_group_call(
-                chat_id, 
+                chat_id,
                 InputStream(
                     InputAudioStream(
                         file_path,
@@ -580,19 +576,16 @@ async def play(_, message: Message):
 
 @Client.on_callback_query(filters.regex(pattern=r"plll"))
 async def lol_cb(b, cb):
-    
+
     bttn = InlineKeyboardMarkup(
         [
-            [
-                InlineKeyboardButton("Command Syntax", callback_data="cmdsyntax")
-            ],[
-                InlineKeyboardButton("🗑 Close", callback_data="close")
-            ]
+            [InlineKeyboardButton("Command Syntax", callback_data="cmdsyntax")],
+            [InlineKeyboardButton("🗑 Close", callback_data="close")],
         ]
     )
-    
+
     nofound = "😕 **Couldn't find song you requested**\n\n» **please provide the correct song name or include the artist's name as well**"
-    
+
     global que
     cbd = cb.data.strip()
     chat_id = cb.message.chat.id
@@ -649,15 +642,16 @@ async def lol_cb(b, cb):
         f"Downloading {title[:50]}\n\n**FileSize:** NaN\n**Downloaded:** NaN\n**Speed:** NaN\n**ETA:** NaN sec"
     )
     keyboard = InlineKeyboardMarkup(
+        [
             [
-                [
-                    InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
-                    InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
-                ],
-                [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
-            ]
-        )
+                InlineKeyboardButton("🚨 Support", url=f"t.me/{SUPPORT}"),
+                InlineKeyboardButton("📡 Updates", url=f"t.me/{UPDATE}"),
+            ],
+            [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
+        ]
+    )
     await generate_cover(requested_by, title, views, duration, thumbnail)
+
     def my_hook(d):
         if d["status"] == "downloading":
             percentage = d["_percent_str"]
@@ -759,8 +753,8 @@ async def lol_cb(b, cb):
             )
         except Exception:
             return await lel.edit(
-            "Error Joining Voice Chat. Make sure Voice Chat is Enabled."
-        )
+                "Error Joining Voice Chat. Make sure Voice Chat is Enabled."
+            )
 
         await music_on(chat_id)
         await add_active_chat(chat_id)
@@ -769,7 +763,7 @@ async def lol_cb(b, cb):
             chat_id,
             photo="final.png",
             caption=f"**🎵 Song:** [{title[:70]}]({url})\n⏱ **Duration:** `{duration}`\n**👤 Added By:** {cb.from_user.mention}\n\n**▶️ Now Playing at `{cb.message.chat.title}`...**",
-            reply_markup=keyboard
+            reply_markup=keyboard,
         )
 
     os.remove("final.png")
