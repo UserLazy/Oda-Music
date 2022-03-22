@@ -334,7 +334,7 @@ async def play(_, message: Message):
         thumb_name = "https://telegra.ph/file/4c39fbb88932761913fff.png"
         thumbnail = thumb_name
         duration = convert_seconds(audio.duration)
-        requested_by = message.from_user.first_name
+        requested_by = await CHAT_TITLE(message.from_user.first_name)
         views = "Locally added"
         await generate_cover(requested_by, title, views, duration, thumbnail)
         file_path = await oda.tgcalls.convert(
@@ -386,7 +386,7 @@ async def play(_, message: Message):
                 f"❌ Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
             )
             return
-        requested_by = message.from_user.first_name
+        requested_by = await CHAT_TITLE(message.from_user.first_name)
         await generate_cover(requested_by, title, views, duration, thumbnail)
 
         def my_hook(d):
@@ -546,7 +546,7 @@ async def play(_, message: Message):
                     [InlineKeyboardButton(text="🗑 Close", callback_data="cls")],
                 ]
             )
-            requested_by = message.from_user.first_name
+            requested_by = await CHAT_TITLE(message.from_user.first_name)
             await generate_cover(requested_by, title, views, duration, thumbnail)
 
             def my_hook(d):
@@ -692,10 +692,7 @@ async def lol_cb(b, cb):
         return
     await cb.answer("💡 Downloading song you requested...", show_alert=True)
     x = int(x)
-    try:
-        requested_by = cb.message.reply_to_message.from_user.first_name
-    except:
-        requested_by = f"[{cb.message.from_user.first_name}](tg://user?id={cb.message.from_user.id})"
+    requested_by = await CHAT_TITLE(cb.from_user.first_name)
     results = YoutubeSearch(query, max_results=5).to_dict()
     resultss = results[x]["url_suffix"]
     title = results[x]["title"][:70]
