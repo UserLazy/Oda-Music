@@ -45,6 +45,8 @@ from oda.database.queue import (
 from oda import app
 import oda.tgcalls
 from oda.tgcalls import youtube
+from oda.tgcalls.youtube import download
+from oda.tgcalls import convert as cconvert
 from oda.config import (
     DURATION_LIMIT,
     que,
@@ -331,7 +333,7 @@ async def play(_, message: Message):
 
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
-        file_path = await oda.tgcalls.convert(
+        file_path = await cconvert(
             (await message.reply_to_message.download(file_name))
             if not path.isfile(path.join("downloads", file_name))
             else file_name
@@ -342,10 +344,6 @@ async def play(_, message: Message):
             results = YoutubeSearch(url, max_results=1).to_dict()
             # print results
             title = results[0]["title"]
-            thumbnail = results[0]["thumbnails"][0]
-            thumb_name = f"thumb{title}.jpg"
-            thumb = requests.get(thumbnail, allow_redirects=True)
-            open(thumb_name, "wb").write(thumb.content)
             duration = results[0]["duration"]
             url_suffix = results[0]["url_suffix"]
             views = results[0]["views"]
@@ -382,7 +380,7 @@ async def play(_, message: Message):
             )
             return
         requested_by = message.from_user.first_name
-        await generate_cover(requested_by, title, views, duration, thumbnail)
+        await generate_cover(requested_by, title, views, duration)
 
         def my_hook(d):
             if d["status"] == "downloading":
@@ -448,8 +446,8 @@ async def play(_, message: Message):
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
 
         loop = asyncio.get_event_loop()
-        x = await loop.run_in_executor(None, youtube.download, url, my_hook)
-        file_path = await oda.tgcalls.convert(x)
+        x = await loop.run_in_executor(None, download, url, my_hook)
+        file_path = await cconvert(x)
     else:
         if len(message.command) < 2:
             return await lel.edit(
@@ -463,11 +461,6 @@ async def play(_, message: Message):
             results = YoutubeSearch(query, max_results=5).to_dict()
             url = f"https://youtube.com{results[0]['url_suffix']}"
             # print results
-            title = results[0]["title"]
-            thumbnail = results[0]["thumbnails"][0]
-            thumb_name = f"thumb{title}.jpg"
-            thumb = requests.get(thumbnail, allow_redirects=True)
-            open(thumb_name, "wb").write(thumb.content)
             duration = results[0]["duration"]
             url_suffix = results[0]["url_suffix"]
             views = results[0]["views"]
@@ -502,7 +495,7 @@ async def play(_, message: Message):
             )
             return
         requested_by = message.from_user.first_name
-        await generate_cover(requested_by, title, views, duration, thumbnail)
+        await generate_cover(requested_by, title, views, duration)
 
         def my_hook(d):
             if d["status"] == "downloading":
@@ -568,8 +561,8 @@ async def play(_, message: Message):
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
 
         loop = asyncio.get_event_loop()
-        x = await loop.run_in_executor(None, youtube.download, url, my_hook)
-        file_path = await oda.tgcalls.convert(x)
+        x = await loop.run_in_executor(None, download, url, my_hook)
+        file_path = await cconvert(x)
 
     if await is_active_chat(message.chat.id):
         position = await queues.put(message.chat.id, file=file_path)
