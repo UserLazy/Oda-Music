@@ -1,5 +1,4 @@
 import asyncio
-
 from os import path
 
 
@@ -27,7 +26,8 @@ async def convert(file_path: str) -> str:
                 "-f s16le "
                 "-ac 1 "
                 "-ar 48000 "
-                "-acodec pcm_s16le "
+                "-acodec "
+                "pcm_s16le "
                 f"{out}"
             ),
             stdin=asyncio.subprocess.PIPE,
