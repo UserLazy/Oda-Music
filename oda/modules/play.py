@@ -343,11 +343,11 @@ async def play(_, message: Message):
         try:
             results = YoutubeSearch(url, max_results=1).to_dict()
             # print results
+            title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
             thumb_name = f"thumb{title}.jpg"
             thumb = requests.get(thumbnail, allow_redirects=True)
             open(thumb_name, "wb").write(thumb.content)
-            title = results[0]["title"]
             duration = results[0]["duration"]
             url_suffix = results[0]["url_suffix"]
             views = results[0]["views"]
@@ -465,6 +465,7 @@ async def play(_, message: Message):
             results = YoutubeSearch(query, max_results=5).to_dict()
             url = f"https://youtube.com{results[0]['url_suffix']}"
             # print results
+            title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
             thumb_name = f"thumb{title}.jpg"
             thumb = requests.get(thumbnail, allow_redirects=True)
