@@ -1,7 +1,7 @@
 import asyncio
 import requests
 from pyrogram import Client
-# idle removed in newer versions
+from pytgcalls import idle
 from oda import app
 from oda.database.functions import clean_restart_stage
 from oda.database.queue import get_active_chats, remove_active_chat

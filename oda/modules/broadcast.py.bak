@@ -8,14 +8,12 @@ from oda.config import SUDO_USERS
 from oda.utils.filters import command
 from oda.tgcalls import client as USER
 from oda.database.chats import add_served_chat, blacklisted_chats, get_served_chats
-from pyrogram import Client, filters
-from pyrogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions, ChatPrivileges
 
 chat_watcher_group = 10
 
 
 @app.on_message(group=chat_watcher_group)
-async def chat_watcher_func(client, message):
+async def chat_watcher_func(_, message):
     chat_id = message.chat.id
     blacklisted_chats_list = await blacklisted_chats()
 
@@ -57,12 +55,12 @@ async def broadcast_message(_, message):
                 sent += 1
             except Exception:
                 pass
-        await message.reply(
+        await message.reply_text(
             f"**Broadcasted Message In {sent}  Chats with {pin} Pins.**"
         )
         return
     if len(message.command) < 2:
-        await message.reply("**Usage**:\n/gcast [message]")
+        await message.reply_text("**Usage**:\n/gcast [message]")
         return
     text = message.text.split(None, 1)[1]
     sent = 0
@@ -83,7 +81,7 @@ async def broadcast_message(_, message):
             sent += 1
         except Exception:
             pass
-    await message.reply(
+    await message.reply_text(
         f"✈️ **Broadcasted message in {sent} chats and {pin} pins.**"
     )
 
@@ -94,13 +92,13 @@ async def broadcast_message(_, message):
 @app.on_message(command("broadcast") & filters.user(SUDO_USERS) & ~filters.edited)
 async def broadcast_message(_, message):
     if len(message.command) < 2:
-        return await message.reply("**Usage**:\n/broadcast [message]")
+        return await message.reply_text("**Usage**:\n/broadcast [message]")
     sleep_time = 0.1
     text = message.text.split(None, 1)[1]
     sent = 0
     schats = await get_served_chats()
     chats = [int(chat["chat_id"]) for chat in schats]
-    m = await message.reply(
+    m = await message.reply_text(
         f"Broadcast in progress, will take {len(chats) * sleep_time} seconds."
     )
     for i in chats:

@@ -21,7 +21,7 @@ async def unauthorised(message: Message):
         + f"\n❌ __Delete Message Chats__"
     )
     try:
-        await message.reply(text)
+        await message.reply_text(text)
     except ChatWriteForbidden:
         await app.leave_chat(chatID)
     return 1

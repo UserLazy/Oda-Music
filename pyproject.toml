@@ -1,0 +1,21 @@
+[project]
+name = "oda-music"
+requires-python = ">=3.10"
+
+[tool.black]
+line-length = 100
+target-version = ["py310","py311","py312"]
+exclude = "/(venv|.venv|build|dist|__pycache__)/"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+indent-width = 4
+extend-exclude = ["venv", ".venv", "build", "dist", "__pycache__"]
+lint.select = ["E","F","I","B","UP","W"]
+lint.ignore = ["E203","E501"]
+format.quote-style = "double"
+
+[tool.ruff.lint.isort]
+known-first-party = ["oda"]
+profile = "black"

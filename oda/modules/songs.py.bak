@@ -9,7 +9,6 @@ from youtube_search import YoutubeSearch
 from oda import app
 from oda.config import BOT_USERNAME
 from oda.utils.filters import command
-from pyrogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions, ChatPrivileges
 
 
 def time_to_seconds(time):

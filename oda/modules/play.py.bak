@@ -138,7 +138,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
 async def hfmm(_, message):
     global DISABLED_GROUPS
     if message.sender_chat:
-        return await message.reply(
+        return await message.reply_text(
             "🔴 __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
         )
     permission = "can_delete_messages"
@@ -150,7 +150,7 @@ async def hfmm(_, message):
     except:
         return
     if len(message.command) != 2:
-        await message.reply("I only know `/musicplayer on` and `/musicplayer off`")
+        await message.reply_text("I only know `/musicplayer on` and `/musicplayer off`")
         return
     status = message.text.split(None, 1)[1]
     message.chat.id
@@ -179,7 +179,7 @@ async def hfmm(_, message):
             f"✅ __Music player has been turn off successfully **{message.chat.title}**__"
         )
     else:
-        await message.reply("I only know `/musicplayer on` and `/musicplayer off`")
+        await message.reply_text("I only know `/musicplayer on` and `/musicplayer off`")
 
 
 @Client.on_callback_query(filters.regex(pattern=r"^(cls)$"))
@@ -209,7 +209,7 @@ async def play(_, message: Message):
     global useer
     user_id = message.from_user.id
     if message.sender_chat:
-        return await message.reply(
+        return await message.reply_text(
             "🔴 __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
         )
 
@@ -256,7 +256,7 @@ async def play(_, message: Message):
     try:
         b = await app.get_chat_member(message.chat.id, ASSID)
         if b.status == "kicked":
-            await message.reply(
+            await message.reply_text(
                 f"🔴 {ASSNAME} (@{ASSUSERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use music"
             )
             return
@@ -269,7 +269,7 @@ async def play(_, message: Message):
                 )
                 await remove_active_chat(chat_id)
             except Exception as e:
-                await message.reply(
+                await message.reply_text(
                     f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
                 )
                 return
@@ -287,7 +287,7 @@ async def play(_, message: Message):
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
-                return await message.reply(
+                return await message.reply_text(
                     f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
                 )
 

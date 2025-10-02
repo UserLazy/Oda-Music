@@ -1,57 +1,103 @@
-<h2 align="centre">Telegram Group Music Player Bot 🎵</h2>
+# Oda-Music — Updated (2025-09-29)
 
-### A bot that can play music on telegram group's voice call
+Template bot musik Telegram (voice chat) yang telah dimigrasikan ke **Pyrogram v2**, **PyTgCalls v3**, dan **yt-dlp**. Repo ini dilengkapi tooling modern (ruff, black, pre-commit), CI GitHub Actions, serta opsi deploy (Termux/Local, Docker, Heroku, Railway).
 
-<p align="center">
-  <img src="https://telegra.ph/file/e8da463b841d344854539.png">
-</p>
+## ✨ Fitur Utama
+- Kompatibel **Pyrogram v2** & **PyTgCalls v3**
+- Menggunakan **yt-dlp** (pengganti youtube_dl)
+- Tooling dev: **ruff**, **black**, **pre-commit**, **.editorconfig**
+- CI: **GitHub Actions** (lint & format check)
+- Deploy siap pakai: **Termux/Local**, **Docker Compose**, **Heroku**, **Railway**
+- Skrip utilitas: `update.sh` (auto pull → lint/format → commit → push), `set_git.sh`
 
-<h3>Requirements 📝</h3>
-
+## 🧰 Prasyarat
+- Python 3.11+
 - FFmpeg
-- Python 3.10.0
-- [NodeJS](https://nodesource.com/)
-- [PyTgCalls](https://github.com/pytgcalls/pytgcalls)
+- Telegram API_ID / API_HASH, BOT_TOKEN
+- (Opsional) STRING_SESSION untuk fitur tertentu
 
-### Commands 🛠
-#### For all in group
-- `/play <reply/url>` - Youtube url
-- `/play <reply audio>`- Song file to play song
-- `/play <song name>` - Play song you requested
-- `/song <song name>` - Download songs you want
-- `/search <query>` - Search videos on youtube with details
-- `@botusername <query>` - Get youtube url by inline
+## ⚙️ Konfigurasi
+1. Salin konfigurasi contoh:
+   ```bash
+   cp .env.example .env
+   ```
+2. Isi nilai pada `.env`:
+   ```dotenv
+   API_ID=123456
+   API_HASH=abcdef123456
+   BOT_TOKEN=123456:abcdef-ghijk
+   OWNER_ID=987654321
+   STRING_SESSION=
+   DATABASE_URL=sqlite:///data/database.sqlite3
+   LOG_LEVEL=INFO
+   ```
 
-#### Admins only
-- `/pause` - Pause song play
-- `/resume` - Resume song play
-- `/skip` - Play next song
-- `/end` - Stop music play
-- `/cleandb` - Clear all files
-- `/userbotjoin` - Add assistant
-- `/userbotleave` - Remove assistant
+## 🏃 Menjalankan Secara Lokal / Termux
+```bash
+# (opsional) venv
+python -m venv venv && source venv/bin/activate
 
-#### Sudo & Owner only
-- `/restart` - Restart bot
-- `/gcast <text/reply>` - Broadcast to groups (auto pinned)
-- `/broadcast <text>` - Broadcast to groups (without pinned)
-- `/exec <code>` - Excute a code
-- `/userbotleaveall` - remove assistant of all groups
+# install requirements
+pip install -r requirements.new.txt  # atau gabungkan ke requirements.txt
 
-### Deploy To Heroku</h4>
+# jalankan bot
+python -m oda
+```
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/UserLazy/Oda-Music/tree/san)
+### Termux quick push (branch default: `san`)
+```bash
+chmod +x set_git.sh update.sh
+./set_git.sh "YourName" "email@example.com"
+./update.sh           # auto pull --rebase → lint/format → commit → push ke 'san'
+```
 
-+ Recomended use Europe server for deploy on Heroku
+## 🐳 Docker
+### Docker Compose
+```bash
+docker compose up -d
+```
+Pastikan environment (`API_ID`, `API_HASH`, `BOT_TOKEN`, dll) sudah tersedia di environment host atau file `.env`.
 
-### Get String Session</h5>
-[![Repl String](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](http://replit.com/@UserLazy/UserLazyString)
+## ☁️ Heroku
+Menggunakan container stack.
+```bash
+heroku stack:set container
+git push heroku san:main
+```
+Buildpacks/FFmpeg sudah di-handle via `Dockerfile`/`heroku.yml`.
 
-**NOTE**: Select P (Pyrogram) for pyrogram string
+## 🚆 Railway
+```bash
+railway up
+```
+Konfigurasi berada di `railway.json` (Nixpacks: python311 + ffmpeg).
 
-### Credits
-- [UserLazy](https://github.com/UserLazy): Dev
-- [Laky](https://github.com/Laky-64) & [Andrew](https://github.com/AndrewLaneX): PyTgCalls
-- [CallMusic](https://github.com/Callsmusic): CallMusic
-- [WilliamButcherBot](https://github.com/TheHamkerCat/WilliamButcherBot): Broadcast 
-- [Oda Nobunaga](https://t.me/OdaRobot): Bot
+## 🛠 Tooling Dev
+- **Ruff** (lint & import sort), **Black** (format)
+- **Pre-commit**:
+  ```bash
+  pip install pre-commit ruff black
+  pre-commit install
+  pre-commit run --all-files
+  ```
+
+## 🔁 Skrip Otomatis
+- `set_git.sh` — set `user.name`, `user.email`, dan credential helper (cache 2 jam)
+- `update.sh` — auto pull → submodule sync → (ruff/black) → sync `requirements.new.txt` → pre-commit → commit → push  
+  Argumen opsional:
+  ```bash
+  ./update.sh <branch> "<commit message>"
+  # contoh:
+  ./update.sh master "chore: migrate modules & bump deps"
+  ```
+
+## 📄 Changelog
+Lihat `CHANGELOG.md` untuk daftar perubahan.
+
+## ⚠️ Catatan
+- Termux bukan VPS: proses berhenti jika app mati/dibunuh. Untuk 24/7 gunakan Heroku/Railway/VPS/Docker pada server.
+- Jika terjadi error/traceback setelah update, buat issue/PR beserta log-nya.
+
+---
+
+Made with ❤️ to keep your Telegram music bot up-to-date.

@@ -23,10 +23,10 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 async def ytsearch(_, message: Message):
     try:
         if len(message.command) < 2:
-            await message.reply("`/search <keyword>` or `/yts <keyword>`")
+            await message.reply_text("`/search <keyword>` or `/yts <keyword>`")
             return
         query = message.text.split(None, 1)[1]
-        m = await message.reply("Searching....")
+        m = await message.reply_text("Searching....")
         results = YoutubeSearch(query, max_results=7).to_dict()
         text = ""
         for i in range(4):
@@ -36,4 +36,4 @@ async def ytsearch(_, message: Message):
             text += f"❂ **Channel** - {results[i]['channel']}\n\n"
         await m.edit(text, disable_web_page_preview=True)
     except Exception as e:
-        await message.reply(str(e))
+        await message.reply_text(str(e))
