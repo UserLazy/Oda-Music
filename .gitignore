@@ -1,0 +1,27 @@
+# Backup files
+*.bak
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Env
+.env
+.env.*
+
+# Virtual env
+venv/
+.venv/
+
+# System
+.DS_Store
+*.bak
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.*
+venv/
+.venv/
+.DS_Store
