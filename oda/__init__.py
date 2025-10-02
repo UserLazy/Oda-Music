@@ -35,11 +35,7 @@ def all_info(app, client):
     else:
         BOT_NAME = getme.first_name
     BOT_USERNAME = getme.username
-    ASSNAME = (
-        f"{getme1.first_name} {getme1.last_name}"
-        if getme1.last_name
-        else getme1.first_name
-    )
+    ASSNAME = f"{getme1.first_name} {getme1.last_name}" if getme1.last_name else getme1.first_name
     ASSUSERNAME = getme1.username
 
 

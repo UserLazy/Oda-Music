@@ -9,7 +9,14 @@ from oda.utils.filters import command
 from oda.tgcalls import client as USER
 from oda.database.chats import add_served_chat, blacklisted_chats, get_served_chats
 from pyrogram import Client, filters
-from pyrogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions, ChatPrivileges
+from pyrogram.types import (
+    Message,
+    CallbackQuery,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    ChatPermissions,
+    ChatPrivileges,
+)
 
 chat_watcher_group = 10
 
@@ -57,9 +64,7 @@ async def broadcast_message(_, message):
                 sent += 1
             except Exception:
                 pass
-        await message.reply(
-            f"**Broadcasted Message In {sent}  Chats with {pin} Pins.**"
-        )
+        await message.reply(f"**Broadcasted Message In {sent}  Chats with {pin} Pins.**")
         return
     if len(message.command) < 2:
         await message.reply("**Usage**:\n/gcast [message]")
@@ -83,9 +88,7 @@ async def broadcast_message(_, message):
             sent += 1
         except Exception:
             pass
-    await message.reply(
-        f"✈️ **Broadcasted message in {sent} chats and {pin} pins.**"
-    )
+    await message.reply(f"✈️ **Broadcasted message in {sent} chats and {pin} pins.**")
 
 
 # Broadcast without pinned
@@ -100,9 +103,7 @@ async def broadcast_message(_, message):
     sent = 0
     schats = await get_served_chats()
     chats = [int(chat["chat_id"]) for chat in schats]
-    m = await message.reply(
-        f"Broadcast in progress, will take {len(chats) * sleep_time} seconds."
-    )
+    m = await message.reply(f"Broadcast in progress, will take {len(chats) * sleep_time} seconds.")
     for i in chats:
         try:
             await app.send_message(i, text=text)

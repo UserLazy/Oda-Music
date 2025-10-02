@@ -8,12 +8,17 @@ from oda.utils.decorators import sudo_users_only, errors
 from oda.utils.administrator import adminsOnly
 from oda.utils.filters import command
 from oda.tgcalls import client as USER
-from pyrogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions, ChatPrivileges
-
-
-@app.on_message(
-    command(["userbotjoin", "odajoin", "oj"]) & ~filters.private & ~filters.bot
+from pyrogram.types import (
+    Message,
+    CallbackQuery,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    ChatPermissions,
+    ChatPrivileges,
 )
+
+
+@app.on_message(command(["userbotjoin", "odajoin", "oj"]) & ~filters.private & ~filters.bot)
 @errors
 async def addchannel(client, message):
     if message.sender_chat:

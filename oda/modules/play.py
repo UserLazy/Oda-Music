@@ -157,9 +157,7 @@ async def hfmm(_, message):
     if status in ["ON", "on", "On"]:
         lel = await message.reply("`Processing...`")
         if message.chat.id not in DISABLED_GROUPS:
-            await lel.edit(
-                f"🔴 __Music player already activate in **{message.chat.title}**__"
-            )
+            await lel.edit(f"🔴 __Music player already activate in **{message.chat.title}**__")
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
@@ -170,9 +168,7 @@ async def hfmm(_, message):
         lel = await message.reply("__`Processing...`__")
 
         if message.chat.id in DISABLED_GROUPS:
-            await lel.edit(
-                f"🔴 __Music player already not active in **{message.chat.title}**__"
-            )
+            await lel.edit(f"🔴 __Music player already not active in **{message.chat.title}**__")
             return
         DISABLED_GROUPS.append(message.chat.id)
         await lel.edit(
@@ -269,9 +265,7 @@ async def play(_, message: Message):
                 )
                 await remove_active_chat(chat_id)
             except Exception as e:
-                await message.reply(
-                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
-                )
+                await message.reply(f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}")
                 return
         else:
             try:
@@ -287,9 +281,7 @@ async def play(_, message: Message):
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
-                return await message.reply(
-                    f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}"
-                )
+                return await message.reply(f"❌ __**Assistant failed to join**__\n\n**Reason**:{e}")
 
     await message.delete()
     audio = (
@@ -474,9 +466,7 @@ async def play(_, message: Message):
                 secmul *= 60
 
         except Exception as e:
-            await lel.edit(
-                "❌ Song not found.\n\nTry another keyword or `/play [yt url]`."
-            )
+            await lel.edit("❌ Song not found.\n\nTry another keyword or `/play [yt url]`.")
             print(str(e))
             return
 
@@ -590,9 +580,7 @@ async def play(_, message: Message):
                 stream_type=StreamType().local_stream,
             )
         except Exception:
-            return await lel.edit(
-                "Error Joining Voice Chat. Make sure Voice Chat is Enabled."
-            )
+            return await lel.edit("Error Joining Voice Chat. Make sure Voice Chat is Enabled.")
 
         await music_on(message.chat.id)
         await add_active_chat(message.chat.id)

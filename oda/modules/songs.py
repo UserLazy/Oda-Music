@@ -9,7 +9,14 @@ from youtube_search import YoutubeSearch
 from oda import app
 from oda.config import BOT_USERNAME
 from oda.utils.filters import command
-from pyrogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions, ChatPrivileges
+from pyrogram.types import (
+    Message,
+    CallbackQuery,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    ChatPermissions,
+    ChatPrivileges,
+)
 
 
 def time_to_seconds(time):
@@ -43,9 +50,7 @@ def song(client, message):
         views = results[0]["views"]
 
     except Exception as e:
-        m.edit(
-            "❌ Found Nothing. Sorry.\n\nTry another keyword or maybe spell it properly."
-        )
+        m.edit("❌ Found Nothing. Sorry.\n\nTry another keyword or maybe spell it properly.")
         print(str(e))
         return
     m.edit("`Downloading Song, Please wait...⏱`")
