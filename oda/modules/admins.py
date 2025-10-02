@@ -65,18 +65,12 @@ async def pause(_, message: Message):
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
-        return await message.reply(
-            "❌ __**I dont think if something's playing on voice chat**__"
-        )
+        return await message.reply("❌ __**I dont think if something's playing on voice chat**__")
     elif not await is_music_playing(message.chat.id):
-        return await message.reply(
-            "❌ __**I dont think if something's playing on voice chat**__"
-        )
+        return await message.reply("❌ __**I dont think if something's playing on voice chat**__")
     await music_off(chat_id)
     await calls.pytgcalls.pause_stream(chat_id)
-    await message.reply(
-        f"🎧 __**Voicechat Paused**__\n│\n╰ Music paused by {checking}!"
-    )
+    await message.reply(f"🎧 __**Voicechat Paused**__\n│\n╰ Music paused by {checking}!")
 
 
 @app.on_message(command(["resume", "or"]) & other_filters)
@@ -92,19 +86,13 @@ async def resume(_, message: Message):
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
-        return await message.reply(
-            "❌ __**I dont think if something's paused on voice chat**__"
-        )
+        return await message.reply("❌ __**I dont think if something's paused on voice chat**__")
     elif await is_music_playing(chat_id):
-        return await message.reply(
-            "❌ __**I dont think if something's paused on voice chat**__"
-        )
+        return await message.reply("❌ __**I dont think if something's paused on voice chat**__")
     else:
         await music_on(chat_id)
         await calls.pytgcalls.resume_stream(chat_id)
-        await message.reply(
-            f"🎧 __**Voicechat Resumed**__\n│\n╰ Music resumed by {checking}!"
-        )
+        await message.reply(f"🎧 __**Voicechat Resumed**__\n│\n╰ Music resumed by {checking}!")
 
 
 @app.on_message(command(["end", "oe"]) & other_filters)
@@ -126,13 +114,9 @@ async def stop(_, message: Message):
             pass
         await remove_active_chat(chat_id)
         await calls.pytgcalls.leave_group_call(chat_id)
-        await message.reply(
-            f"🎧 __**Voicechat End/Stopped**__\n│\n╰ Music ended by {checking}!"
-        )
+        await message.reply(f"🎧 __**Voicechat End/Stopped**__\n│\n╰ Music ended by {checking}!")
     else:
-        return await message.reply(
-            "❌ __**I dont think if something's playing on voice chat**__"
-        )
+        return await message.reply("❌ __**I dont think if something's playing on voice chat**__")
 
 
 @app.on_message(command(["skip", "os"]) & other_filters)

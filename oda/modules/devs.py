@@ -24,10 +24,7 @@ async def gib_restart(client, message, hap):
 
 
 async def aexec(code, client, message):
-    exec(
-        "async def __aexec(client, message): "
-        + "".join(f"\n {a}" for a in code.split("\n"))
-    )
+    exec("async def __aexec(client, message): " + "".join(f"\n {a}" for a in code.split("\n")))
     return await locals()["__aexec"](client, message)
 
 
@@ -41,9 +38,7 @@ async def edit_or_reply(msg: Message, **kwargs):
 @sudo_users_only
 async def executor(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(
-            message, text="__please give me some command to execute.__"
-        )
+        return await edit_or_reply(message, text="__please give me some command to execute.__")
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
     except IndexError:
